@@ -1,0 +1,80 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>mil.army.c2.c2sd.mil-sym-java</groupId>
+		<artifactId>mil-sym-java</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>service</artifactId>
+	<packaging>jar</packaging>
+
+	<name>JavaLineArray</name>
+	<url>https://github.com/MoebiusSolutions/mil-sym-java</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>3.2.5.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.spec.javax.ws.rs</groupId>
+			<artifactId>jboss-jaxrs-api_1.1_spec</artifactId>
+			<version>1.0.1.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>mil.army.c2.c2sd.mil-sym-java</groupId>
+			<artifactId>renderer</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>mil.army.c2.c2sd.mil-sym-java</groupId>
+			<artifactId>JavaLineArray</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>mil.army.c2.c2sd.mil-sym-java</groupId>
+			<artifactId>JavaRenderer</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>mil.army.c2.c2sd.mil-sym-java</groupId>
+			<artifactId>JavaRendererServer</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>mil.army.c2.c2sd.mil-sym-java</groupId>
+			<artifactId>JavaRendererUtils</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.httpunit</groupId>
+			<artifactId>httpunit</artifactId>
+			<version>1.7.2</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>
