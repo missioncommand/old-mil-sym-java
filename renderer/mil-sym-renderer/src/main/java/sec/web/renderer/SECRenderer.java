@@ -952,9 +952,6 @@ public class SECRenderer {
                             kml.append("<Icon>");
                                 kml.append("<href><![CDATA[" + fullURL.replaceAll("kml", "image") + "]]></href>");
                             kml.append("</Icon>");
-                            kml.append("<hotSpot x=\"" + String.valueOf(pi.getCenterPoint().getX()) + 
-                                             "\" y=\"" + String.valueOf(pi.getCenterPoint().getY()) +
-                                             "\" xunits=\"pixels\" yunits=\"insetPixels\"/>");
                         kml.append("</IconStyle>");
                         kml.append("<LabelStyle>");
                             kml.append("<scale>" + "0" + "</scale>");
