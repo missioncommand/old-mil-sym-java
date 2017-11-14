@@ -138,6 +138,9 @@ public class RendererSettings {
     private static float _KMLLabelScale = 1.0f;
     
     private static int _DPI = 90;
+    
+    //acevedo - 11/14/2017 - adding option to render only 2 ENY labels.
+    private boolean _TwoENYLabelOnly = true;
 
     private RendererSettings()
     {
@@ -698,5 +701,27 @@ public class RendererSettings {
     {
         return _KMLLabelScale;
     }
+    
+    
+    /**
+  	 ** Get a boolean indicating between the use of ENY labels in all segments (false) or 
+ 	 * to only set 2 labels one at the north and the other one at the south of the graphic (true).
+  	 * @returns {boolean}
+  	 */
+  	public boolean getTwoENYLabelOnly()
+  	{
+  			return _TwoENYLabelOnly;
+  	}
+  	
+  	/**
+ 	 * Set a boolean indicating between the use of ENY labels in all segments (false) or 
+ 	 * to only set 2 labels one at the north and the other one at the south of the graphic (true).
+ 	 * @param TwoENYLabelOnly
+ 	 */
+ 	public void setTwoENYLabelOnly(boolean TwoENYLabelOnly )
+ 	{
+ 		_TwoENYLabelOnly = TwoENYLabelOnly;
+ 	}
+ 	
 
 }
