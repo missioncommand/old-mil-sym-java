@@ -3202,8 +3202,9 @@ public class SinglePointRenderer {
                 if(SymbolUtilities.canUnitHaveModifier(symbolID, ModifiersUnits.M_HIGHER_FORMATION))
                     mValue = modifiers.get(ModifiersUnits.M_HIGHER_FORMATION);
                 String ccValue = modifiers.get(ModifiersUnits.CC_COUNTRY_CODE);
-                
-                modifierValue += mValue;
+
+                if(mValue != null)
+                    modifierValue += mValue;
                 if(ccValue != null)
                 {
                     if(mValue != null && mValue.equals("") == false)
