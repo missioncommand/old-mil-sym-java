@@ -341,7 +341,7 @@ public final class DISMSupport
             int counter = 0;
         try {
             // switch points[1] and points[2] if they are backwards
-            double dAngle0, dDeltaX0, dDeltaY0, dDeltaX1, dDeltaY1;
+            double dAngle0, dAngle1, dDeltaX0, dDeltaY0, dDeltaX1, dDeltaY1;
             double iLengthPt0Pt1 = 0;
             double iLengthPt0Pt2 = 0;
             double iDelta = 0;
@@ -352,8 +352,6 @@ public final class DISMSupport
             POINT2[] savepoints = new POINT2[3];
             POINT2[] pts = new POINT2[2];
             POINT2[] ptsJaggyLine = new POINT2[4];
-            //float scale = 1;
-            boolean goLeftThenRight=false;
             int sign=1;
             
             //added section for jaggy line orientation M. Deutch 6-24-11
@@ -380,14 +378,9 @@ public final class DISMSupport
             else if(pt1.x < pt2.x && quadrant == 4)
                 sign=-1;
             //end section
-            
-            //System.out.print(Integer.toString(quadrant));
-            //System.out.print("\n");
+
             if(linetype==TacticalLines.SARA)
                 t=0;
-            
-            if(points[1].x<=points[2].x)
-                goLeftThenRight=true;
 
             //save the points in the correct order
             for (j = 0; j < 3; j++) {
@@ -418,17 +411,19 @@ public final class DISMSupport
                     iDelta = minLength;
                 }
 
+                dAngle0 = Math.atan2(savepoints[0].y - savepoints[1].y, savepoints[0].x - savepoints[1].x);
+                dAngle1 = Math.atan2(savepoints[0].y - savepoints[2].y, savepoints[0].x - savepoints[2].x);
+
                 // left side: draw letter in from the jaggy line
-                if(goLeftThenRight)
-                    savepoints[0].x-=30*t;  //was 20
-                else
-                    savepoints[0].x+=30*t;  //was 20
+
+                savepoints[0].x -= 30 * Math.cos(dAngle0);  //was 20
+                savepoints[0].y -= 30 * Math.sin(dAngle0);
 
                 iLetterOffset = 0;
                 ptsJaggyLine[0].x = savepoints[0].x - iLetterOffset * 2;//was -
                 ptsJaggyLine[0].y = savepoints[0].y;
                 ptsJaggyLine[0].x -= iLetterOffset;
-                dAngle0 = Math.atan2(ptsJaggyLine[0].y - savepoints[1].y, ptsJaggyLine[0].x - savepoints[1].x);
+
                 pts[0].x = (ptsJaggyLine[0].x + savepoints[1].x) / 2;
                 pts[0].y = (ptsJaggyLine[0].y + savepoints[1].y) / 2;
                 dDeltaX0 = Math.cos(dAngle0 + sign*CONST_PI / 4) * iDelta;   //was +
@@ -472,19 +467,18 @@ public final class DISMSupport
                 }
 
                 // right side: draw letter and jaggy line
-                if(goLeftThenRight)
-                    savepoints[0].x+=60*t;  //was 40
-                else
-                    savepoints[0].x-=60*t;  //wass 40
+
+                savepoints[0].x += 30 * (Math.cos(dAngle0) - Math.cos(dAngle1));  //was 20
+                savepoints[0].y += 30 * (Math.sin(dAngle0) - Math.sin(dAngle1));
 
                 ptsJaggyLine[0].x = savepoints[0].x + iLetterOffset * 2;
                 ptsJaggyLine[0].y = savepoints[0].y;
                 ptsJaggyLine[0].x += iLetterOffset;
-                dAngle0 = Math.atan2(ptsJaggyLine[0].y - savepoints[2].y, ptsJaggyLine[0].x - savepoints[2].x);
+
                 pts[0].x = (ptsJaggyLine[0].x + savepoints[2].x) / 2;
                 pts[0].y = (ptsJaggyLine[0].y + savepoints[2].y) / 2;
-                dDeltaX0 = Math.cos(dAngle0 - sign*CONST_PI / 4) * iDelta;   //was -
-                dDeltaY0 = Math.sin(dAngle0 - sign*CONST_PI / 4) * iDelta;   //was -
+                dDeltaX0 = Math.cos(dAngle1 - sign*CONST_PI / 4) * iDelta;   //was -
+                dDeltaY0 = Math.sin(dAngle1 - sign*CONST_PI / 4) * iDelta;   //was -
                 ptsJaggyLine[1].x = pts[0].x - dDeltaX0;    //was -
                 ptsJaggyLine[1].y = pts[0].y - dDeltaY0;    //was -
                 ptsJaggyLine[2].x = pts[0].x + dDeltaX0;    //was +
@@ -496,8 +490,8 @@ public final class DISMSupport
                 }
                 points[counter - 1].style = 5;
                 // draw arrow at end of line
-                dDeltaX1 = Math.cos(dAngle0 + sign*CONST_PI / 4) * iDelta;   //was +
-                dDeltaY1 = Math.sin(dAngle0 + sign*CONST_PI / 4) * iDelta;   //was +
+                dDeltaX1 = Math.cos(dAngle1 + sign*CONST_PI / 4) * iDelta;   //was +
+                dDeltaY1 = Math.sin(dAngle1 + sign*CONST_PI / 4) * iDelta;   //was +
                 ptsJaggyLine[0].x = savepoints[2].x + dDeltaX0;
                 ptsJaggyLine[0].y = savepoints[2].y + dDeltaY0;
                 ptsJaggyLine[1] = savepoints[2];
