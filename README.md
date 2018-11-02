@@ -32,21 +32,6 @@ mil-sym-java is a project that contains three distinct components:
   - Jetty
   
 
-A live instance of the web service can be tested on CloudBees at [http://mil-sym-renderer.missioncommand.cloudbees.net/]
- 
-Basic usage can be seen below:
- 
-http://mil-sym-renderer.missioncommand.cloudbees.net/renderer/image/OFPPC----------?size=48 
-will output:![Service call for symbol]()  - service discontinued  
-
-http://mil-sym-renderer.missioncommand.cloudbees.net/renderer/image/OHPPC----------?size=48 
-will output:![Service call for symbol]()  - service discontinued  
-
-http://mil-sym-renderer.missioncommand.cloudbees.net/renderer/image/ONPPC----------?size=48 
-will output:![Service call for symbol]()  - service discontinued  
-
-http://mil-sym-renderer.missioncommand.cloudbees.net/renderer/image/OUPPC----------?size=48&fillColor=3366FF&lineColor=FF0000 
-will output:![Service call for symbol SHGP-----------]()  - service discontinued  
 
 
 Version
