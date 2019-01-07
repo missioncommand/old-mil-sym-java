@@ -3061,6 +3061,15 @@ public final class arraysupport {
                     acCounter = 29;
                     break;
                 case TacticalLines.TURN:
+                    
+                    if(rev > 0)
+                    {
+                        //2525C or higher switch first and last point.  Order changed in 2525C
+                        POINT2 swapPt = pLinePoints[0];
+                        pLinePoints[0] = pLinePoints[1];
+                        pLinePoints[1] = swapPt;
+                    }//*/
+                    
                     GetIsolatePointsDouble(pLinePoints, lineType, null);
                     acCounter = 29;
                     break;
