@@ -1232,7 +1232,7 @@ public class SECRenderer {
 	 *            The viewable area of the map. Passed in the format of a string
 	 *            "lowerLeftX,lowerLeftY,upperRightX,upperRightY." example:
 	 *            "-50.4,23.6,-42.2,24.2"
-	 * @param symbolModifiers
+	 * @param modifiers
 	 *            A JSON string representing all the possible symbol modifiers
 	 *            represented in the MIL-STD-2525C. Format of the string will be
 	 *            {"modifiers":

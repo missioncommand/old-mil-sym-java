@@ -489,25 +489,40 @@ public class SinglePointRenderer {
                 if(siFill != null)
                     siFill.setLineColor(symbol.getFillColor());//AffiliationColors.FriendlyUnitFillColor);
 
-                
+
+                //Color c1 = lookup.getColor1();
+                Color c1 = null;                
                 if(siSymbol1 != null)
                 {
-                    //Color c1 = lookup.getColor1();
-                    Color c1 = null;
                     
                     if(symbol.getIconColor() != null)
+                    {
                         c1 = symbol.getIconColor();
+                        siSymbol1.setLineColor(new Color(c1.getRed(), c1.getGreen(), 
+                            c1.getBlue(), c1.getAlpha()));
+                    }
                     else
+                    {
                         c1 = lookup.getColor1();
-                    
-                    siSymbol1.setLineColor(new Color(c1.getRed(), c1.getGreen(), 
+                        siSymbol1.setLineColor(new Color(c1.getRed(), c1.getGreen(), 
                             c1.getBlue(), symbol.getLineColor().getAlpha()));
+                    }
+                    
+                    
                 }
                 if(siSymbol2 != null)
                 {
                     Color c2 = lookup.getColor2();
-                    siSymbol2.setLineColor(new Color(c2.getRed(), c2.getGreen(), 
+                    if(c1 == null)
+                    {
+                        siSymbol2.setLineColor(new Color(c2.getRed(), c2.getGreen(), 
                             c2.getBlue(), symbol.getLineColor().getAlpha()));
+                    }
+                    else
+                    {
+                        siSymbol2.setLineColor(new Color(c2.getRed(), c2.getGreen(), 
+                            c2.getBlue(), c1.getAlpha()));
+                    }
                 }
                 
                 //Just for sea mines
