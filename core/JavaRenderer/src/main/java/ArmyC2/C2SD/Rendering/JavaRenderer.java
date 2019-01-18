@@ -332,6 +332,14 @@ public class JavaRenderer implements IJavaRenderer {
             symbol.setUnitSize(unitSize);
             symbol.setKeepUnitRatio(keepUnitRatio);
             symbol.setSymbologyStandard(symStd);
+            
+            if(Modifiers.containsKey(MilStdAttributes.LineColor))
+                symbol.setLineColor(SymbolUtilities.getColorFromHexString(Modifiers.get(MilStdAttributes.LineColor)));
+            if(Modifiers.containsKey(MilStdAttributes.FillColor))
+                symbol.setFillColor(SymbolUtilities.getColorFromHexString(Modifiers.get(MilStdAttributes.FillColor)));
+            if(Modifiers.containsKey(MilStdAttributes.IconColor))
+                symbol.setIconColor(SymbolUtilities.getColorFromHexString(Modifiers.get(MilStdAttributes.IconColor)));
+            
             ProcessSymbolGeometry(symbol, ipc, null);
             returnVal = symbol.toImageInfo();
         }
