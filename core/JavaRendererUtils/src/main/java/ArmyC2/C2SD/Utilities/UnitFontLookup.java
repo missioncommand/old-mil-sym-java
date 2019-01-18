@@ -534,10 +534,10 @@ public class UnitFontLookup {
                           returnVal = 809;
                       }
                   }
-                  else if(affiliation == 'P' ||
+                  else /*if(affiliation == 'P' ||
                      affiliation == 'U' ||
                      affiliation == 'G' ||
-                     affiliation == 'W')
+                     affiliation == 'W')//*/
                   {
 
                       if(battleDimension=='Z' ||//unknown
