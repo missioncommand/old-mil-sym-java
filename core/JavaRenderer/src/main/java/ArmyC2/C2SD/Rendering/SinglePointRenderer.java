@@ -301,6 +301,16 @@ public class SinglePointRenderer {
                 if(charSymbol2Index > 0)
                     gvSymbol2 = _UnitFont.createGlyphVector(frc, symbol2);
 
+
+                //If we're not drawing the frame or fill and keepUnitRatio is false, we want the core symbol to take all the space.
+                if(symbol.getKeepUnitRatio()==false && gvSymbol1 != null && symbol.getIconColor() != null && symbol.getLineColor().getAlpha() == 0 && symbol.getFillColor().getAlpha() == 0)
+                {
+                    gvFill = null;
+                    gvFrameAssumed = null;
+                    gvFrame = null;
+                }
+
+                
                 //check size ratio
                 if(pixelSize > 0 && (charFrameIndex > 0 || charFillIndex > 0))
                 {
@@ -320,7 +330,7 @@ public class SinglePointRenderer {
 
                 }
             }
-
+            
             //resize to pixels
             if(ratio > 0)
             {
