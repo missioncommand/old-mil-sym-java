@@ -29,6 +29,7 @@ public class UnitFontLookup {
   private static final int FillIndexUS = 800;//Sea Surface
   private static final int FillIndexUU = 837;//Subsurface
   private static final int FillIndexUF = 800;//SOF
+  private static final int FillIndexUC = 853;//Cyber
    //FRIENDLY FILL Indexes
   private static final int FillIndexFZ = 812;
   private static final int FillIndexFP = 843;
@@ -38,6 +39,7 @@ public class UnitFontLookup {
   private static final int FillIndexFS = 812;
   private static final int FillIndexFU = 831;
   private static final int FillIndexFF = 803;
+  private static final int FillIndexFC = 856;
    //NEUTRAL FILL Indexes
   private static final int FillIndexNZ = 809;
   private static final int FillIndexNP = 846;
@@ -47,6 +49,7 @@ public class UnitFontLookup {
   private static final int FillIndexNS = 809;
   private static final int FillIndexNU = 834;
   private static final int FillIndexNF = 809;
+  private static final int FillIndexNC = 862;
    //HOSTILE FILL Indexes
   private static final int FillIndexHZ = 806;
   private static final int FillIndexHP = 840;
@@ -56,6 +59,7 @@ public class UnitFontLookup {
   private static final int FillIndexHS = 806;
   private static final int FillIndexHU = 828;
   private static final int FillIndexHF = 806;
+  private static final int FillIndexHC = 859;
 
   //Font positions for new layout
   //770-799: small fills, inside the frame
@@ -291,6 +295,10 @@ public class UnitFontLookup {
                         else
                             returnVal = 843;
                       }
+                      else if(battleDimension=='C')//Cyber
+                      {
+                          returnVal = FillIndexFC;
+                      }
                       else//if(battleDimension=='Z')//unknown
                       {
                           returnVal = 812;//index in font file
@@ -321,6 +329,10 @@ public class UnitFontLookup {
                         else
                             returnVal = 840;
                       }
+                      else if(battleDimension=='C')//Cyber
+                      {
+                          returnVal = FillIndexHC;
+                      }
                       else//if(battleDimension=='Z')//unknown
                       {
                           returnVal = 806;//index in font file
@@ -350,6 +362,10 @@ public class UnitFontLookup {
                             returnVal = 822;
                         else
                             returnVal = 846;
+                      }
+                      else if(battleDimension=='C')//Cyber
+                      {
+                          returnVal = FillIndexNC;
                       }
                       else//if(battleDimension=='Z')//unknown
                       {
@@ -386,6 +402,10 @@ public class UnitFontLookup {
                             returnVal = 825;
                         else
                             returnVal = 849;
+                      }
+                      else if(battleDimension=='C')//Cyber
+                      {
+                          returnVal = FillIndexUC;
                       }
                       else
                           returnVal = 800;
@@ -979,11 +999,13 @@ public class UnitFontLookup {
               characterIndex == FillIndexHGE ||
               characterIndex == FillIndexHS ||
               characterIndex == FillIndexHF ||
+              characterIndex == FillIndexHC ||
               characterIndex == FillIndexUZ ||
               characterIndex == FillIndexUG ||
               characterIndex == FillIndexUGE ||
               characterIndex == FillIndexUS ||
-              characterIndex == FillIndexUF)
+              characterIndex == FillIndexUF ||
+              characterIndex == FillIndexUC)
       {
           return 1.44;
       }
@@ -1007,12 +1029,13 @@ public class UnitFontLookup {
               characterIndex == FillIndexNG ||
               characterIndex == FillIndexNGE ||
               characterIndex == FillIndexNS ||
-              characterIndex == FillIndexNF)
+              characterIndex == FillIndexNF ||
+              characterIndex == FillIndexNC)
       {
           return 1.1;
       }
       else if(characterIndex == FillIndexFG ||
-              characterIndex == FillIndexFGE)
+              characterIndex == FillIndexFC)
       {
           return 1.0;
       }
@@ -1036,7 +1059,8 @@ public class UnitFontLookup {
               characterIndex == FillIndexUU+1 ||
               characterIndex == FillIndexUU+2 ||
               characterIndex == FillIndexFG ||
-              characterIndex == FillIndexFF)
+              characterIndex == FillIndexFF ||
+              characterIndex == FillIndexFC)
       {
           return 1.5;
       }
@@ -1045,11 +1069,13 @@ public class UnitFontLookup {
               characterIndex == FillIndexHGE ||
               characterIndex == FillIndexHS ||
               characterIndex == FillIndexHF ||
+              characterIndex == FillIndexHC ||
               characterIndex == FillIndexUZ ||
               characterIndex == FillIndexUG ||
               characterIndex == FillIndexUGE ||
               characterIndex == FillIndexUS ||
-              characterIndex == FillIndexUF)
+              characterIndex == FillIndexUF ||
+              characterIndex == FillIndexUC)
       {
           return 1.44;
       }
