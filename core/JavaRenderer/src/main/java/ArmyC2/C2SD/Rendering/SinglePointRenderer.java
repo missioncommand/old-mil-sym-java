@@ -2849,8 +2849,19 @@ public class SinglePointRenderer {
         Polygon arrowHead = null;
         double length = 40;
 
+        char affiliation = symbolCode.charAt(1);
         if(SymbolUtilities.isNBC(symbolCode))
             length = bounds.height / 2;
+        else if((SymbolUtilities.isHQ(symbolCode)) && 
+					(affiliation == 'F' ||
+					affiliation == 'A' ||
+					affiliation == 'D' ||
+					affiliation == 'M' ||
+					affiliation == 'J' ||
+					affiliation == 'K' ||
+					affiliation == 'N' ||
+					affiliation == 'L') == false)
+			length = Math.round(bounds.getHeight() * 0.7);
         else
             length = bounds.height;
         //Boolean drawStaff = false;
@@ -2873,10 +2884,40 @@ public class SinglePointRenderer {
                     scheme == 'O' || scheme == 'E')
         {
             //drawStaff = true;
-            y1 = bounds.getY() + bounds.getHeight();
-            line.moveTo(x1, y1);
-            y1 = y1 + length;
-            line.lineTo(x1, y1);
+            if(SymbolUtilities.isHQ(symbolCode)==false)//has HQ staff to start from
+            {
+                y1 = bounds.getY() + bounds.getHeight();
+                line.moveTo(x1, y1);
+                y1 = y1 + length;
+                line.lineTo(x1, y1);
+            }
+            else
+            {
+                x1 = bounds.getX()+1;
+
+                if(affiliation == 'F' ||
+                    affiliation == 'A' ||
+                    affiliation == 'D' ||
+                    affiliation == 'M' ||
+                    affiliation == 'J' ||
+                    affiliation == 'K' ||
+                    affiliation == 'N' ||
+                    affiliation == 'L')
+                {
+                    y1 = bounds.getY() + bounds.getHeight();
+                    line.moveTo(x1, y1);
+                    y1 = y1 + length;
+                    line.lineTo(x1,y1);
+                }
+                else
+                {
+                    //drawStaff = true;
+                    y1 = bounds.getY() + bounds.getHeight()/2;
+                    line.moveTo(x1, y1);
+                    y1 = y1 + (bounds.getHeight());// * 1.5);
+                    line.lineTo(x1, y1);
+                }
+            }
 
         }
 
