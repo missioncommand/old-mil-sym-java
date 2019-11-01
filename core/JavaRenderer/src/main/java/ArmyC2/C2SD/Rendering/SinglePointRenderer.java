@@ -422,7 +422,7 @@ public class SinglePointRenderer {
                 if(gvFrame != null)
                     shapeFrame = gvFrame.getGlyphOutline(0, (int)pixel.getX(), (int)pixel.getY());
                 if(gvFill != null)
-                shapeFill = gvFill.getGlyphOutline(0, (int)pixel.getX(), (int)pixel.getY());
+                    shapeFill = gvFill.getGlyphOutline(0, (int)pixel.getX(), (int)pixel.getY());
                 if(gvSymbol1 != null)
                     shapeSymbol1 = gvSymbol1.getGlyphOutline(0, (int)pixel.getX(), (int)pixel.getY());
                 if(gvSymbol2 != null)

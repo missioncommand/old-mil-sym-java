@@ -494,7 +494,7 @@ public class UnitFontLookup {
                             returnVal = 803;
                       }
                   }
-                  if(affiliation == 'H' || affiliation == 'S')//hostile,suspect
+                  else if(affiliation == 'H' || affiliation == 'S')//hostile,suspect
                   {
                       if(battleDimension=='Z')//unknown
                       {
@@ -524,7 +524,7 @@ public class UnitFontLookup {
                           returnVal = 806;
                       }
                   }
-                  if(affiliation == 'N' || affiliation == 'L')//neutral,exercise neutral
+                  else if(affiliation == 'N' || affiliation == 'L')//neutral,exercise neutral
                   {
                       if(battleDimension=='Z')//unknown
                       {
