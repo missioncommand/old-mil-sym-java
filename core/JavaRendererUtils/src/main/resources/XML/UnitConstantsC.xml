@@ -5833,30 +5833,6 @@
     <PATH>Warfighting Symbology/Sea Surface Track/Sea Surface Track Combatant</PATH>
   </SYMBOL>
   <SYMBOL>
-    <SYMBOLID>S*S*S-----*****</SYMBOLID>
-    <DESCRIPTION>Sea Surface Station</DESCRIPTION>
-    <DRAWCATEGORY>8</DRAWCATEGORY>
-    <HIERARCHY>1.X.4.1.6</HIERARCHY>
-    <ALPHAHIERARCHY>WAR.SSUF.CBTT.STN</ALPHAHIERARCHY>
-    <PATH>Warfighting Symbology/Sea Surface Track/Sea Surface Track Combatant</PATH>
-  </SYMBOL>
-  <SYMBOL>
-    <SYMBOLID>S*S*SP----*****</SYMBOLID>
-    <DESCRIPTION>Picket</DESCRIPTION>
-    <DRAWCATEGORY>8</DRAWCATEGORY>
-    <HIERARCHY>1.X.4.1.6.1</HIERARCHY>
-    <ALPHAHIERARCHY>WAR.SSUF.CBTT.STN.PKT</ALPHAHIERARCHY>
-    <PATH>Warfighting Symbology/Sea Surface Track/Sea Surface Track Combatant/Station</PATH>
-  </SYMBOL>
-  <SYMBOL>
-    <SYMBOLID>S*S*SA----*****</SYMBOLID>
-    <DESCRIPTION>ASW Ship</DESCRIPTION>
-    <DRAWCATEGORY>8</DRAWCATEGORY>
-    <HIERARCHY>1.X.4.1.6.2</HIERARCHY>
-    <ALPHAHIERARCHY>WAR.SSUF.CBTT.STN.ASWSHP</ALPHAHIERARCHY>
-    <PATH>Warfighting Symbology/Sea Surface Track/Sea Surface Track Combatant/Station</PATH>
-  </SYMBOL>
-  <SYMBOL>
     <SYMBOLID>S*S*G-----*****</SYMBOLID>
     <DESCRIPTION>Navy Group</DESCRIPTION>
     <DRAWCATEGORY>8</DRAWCATEGORY>
@@ -5999,22 +5975,6 @@
     <HIERARCHY>1.X.4.2.6</HIERARCHY>
     <ALPHAHIERARCHY>WAR.SSUF.NCBTT.HOV</ALPHAHIERARCHY>
     <PATH>Warfighting Symbology/Sea Surface Track/Noncombatant</PATH>
-  </SYMBOL>
-  <SYMBOL>
-    <SYMBOLID>S*S*NN----*****</SYMBOLID>
-    <DESCRIPTION>Noncombatant Station</DESCRIPTION>
-    <DRAWCATEGORY>8</DRAWCATEGORY>
-    <HIERARCHY>1.X.4.2.7</HIERARCHY>
-    <ALPHAHIERARCHY>WAR.SSUF.NCBTT.STN</ALPHAHIERARCHY>
-    <PATH>Warfighting Symbology/Sea Surface Track/Noncombatant</PATH>
-  </SYMBOL>
-  <SYMBOL>
-    <SYMBOLID>S*S*NNR---*****</SYMBOLID>
-    <DESCRIPTION>Rescue</DESCRIPTION>
-    <DRAWCATEGORY>8</DRAWCATEGORY>
-    <HIERARCHY>1.X.4.2.7.1</HIERARCHY>
-    <ALPHAHIERARCHY>WAR.SSUF.NCBTT.STN.RSC</ALPHAHIERARCHY>
-    <PATH>Warfighting Symbology/Sea Surface Track/Noncombatant/Station</PATH>
   </SYMBOL>
   <SYMBOL>
     <SYMBOLID>S*S*X-----*****</SYMBOLID>

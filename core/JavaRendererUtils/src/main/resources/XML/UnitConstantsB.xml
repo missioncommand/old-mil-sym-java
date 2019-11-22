@@ -2224,14 +2224,6 @@
 	<PATH>Warfighting Symbology/Ground Track/Unit/Combat/Internal Security Forces</PATH>
  </SYMBOL>
  <SYMBOL>
-	<SYMBOLID>S*G*UCL---*****</SYMBOLID>
-	<DESCRIPTION>Surveillance Unit</DESCRIPTION>
-	<DRAWCATEGORY>8</DRAWCATEGORY>
-	<HIERARCHY>1.X.3.1.1.11</HIERARCHY>
-	<ALPHAHIERARCHY>WAR.GRDTRK.UNT.CBT.SVL</ALPHAHIERARCHY>
-	<PATH>Warfighting Symbology/Ground Track/Unit/Combat</PATH>
- </SYMBOL>
- <SYMBOL>
 	<SYMBOLID>S*G*UU----*****</SYMBOLID>
 	<DESCRIPTION>Combat Support</DESCRIPTION>
 	<DRAWCATEGORY>8</DRAWCATEGORY>
@@ -5917,14 +5909,6 @@
 	<DRAWCATEGORY>8</DRAWCATEGORY>
 	<HIERARCHY>1.X.4.1.9.3</HIERARCHY>
 	<ALPHAHIERARCHY>WAR.SSUF.CBTT.USV.ASUW</ALPHAHIERARCHY>
-	<PATH>Warfighting Symbology/Sea Surface Track/Sea Surface Track Combatant/Unmanned Surface Vehicle (USV)</PATH>
- </SYMBOL>
- <SYMBOL>
-	<SYMBOLID>S*S*CUR---*****</SYMBOLID>
-	<DESCRIPTION>USV Remote Multimission Vehicle</DESCRIPTION>
-	<DRAWCATEGORY>8</DRAWCATEGORY>
-	<HIERARCHY>1.X.4.1.9.4</HIERARCHY>
-	<ALPHAHIERARCHY>WAR.SSUF.CBTT.USV.RMV</ALPHAHIERARCHY>
 	<PATH>Warfighting Symbology/Sea Surface Track/Sea Surface Track Combatant/Unmanned Surface Vehicle (USV)</PATH>
  </SYMBOL>
  <SYMBOL>

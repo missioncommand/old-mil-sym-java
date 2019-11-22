@@ -7,10 +7,7 @@ About
 -----------
 mil-sym-java is a well worn set of java libraries that have been used in US Army Mission Command software for years.  In November 2013 Mission Command was given the approval to release and maintain these libraries as public open source.  
 
-[Web Service Developer's Guide Wiki](https://github.com/missioncommand/mil-sym-java/wiki/Developer's-Guide)  
-[Developer's Guide Word Docs](https://github.com/missioncommand/mil-sym-java/blob/master/documentation)  
-[Multipoint Sample]()  - service discontinued  
-[Singlepoint Sample]()  - service discontinued  
+[Developer's Guide Wiki](https://github.com/missioncommand/mil-sym-java/wiki/Developer's-Guide)  
 [Google Group Discussion Forum](https://groups.google.com/forum/#!forum/mission-command-milstd-renderer)  
 
 MIL-STD-2525
@@ -32,21 +29,6 @@ mil-sym-java is a project that contains three distinct components:
   - Jetty
   
 
-A live instance of the web service can be tested on CloudBees at [http://mil-sym-renderer.missioncommand.cloudbees.net/]
- 
-Basic usage can be seen below:
- 
-http://mil-sym-renderer.missioncommand.cloudbees.net/renderer/image/OFPPC----------?size=48 
-will output:![Service call for symbol]()  - service discontinued  
-
-http://mil-sym-renderer.missioncommand.cloudbees.net/renderer/image/OHPPC----------?size=48 
-will output:![Service call for symbol]()  - service discontinued  
-
-http://mil-sym-renderer.missioncommand.cloudbees.net/renderer/image/ONPPC----------?size=48 
-will output:![Service call for symbol]()  - service discontinued  
-
-http://mil-sym-renderer.missioncommand.cloudbees.net/renderer/image/OUPPC----------?size=48&fillColor=3366FF&lineColor=FF0000 
-will output:![Service call for symbol SHGP-----------]()  - service discontinued  
 
 
 Version
@@ -79,7 +61,6 @@ Apache License
 Version 2.0, January 2004
 http://www.apache.org/licenses/
 
-  [http://mil-sym-renderer.missioncommand.cloudbees.net/]: http://mil-sym-renderer.missioncommand.cloudbees.net/
   [Maven]: http://maven.apache.org/
   [jQuery]: http://jQuery.com
   [MIL-STD-2525]:http://www.everyspec.com/MIL-STD/MIL-STD-2000-2999/MIL-STD-2525_20727/

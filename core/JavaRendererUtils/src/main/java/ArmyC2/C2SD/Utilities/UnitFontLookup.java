@@ -474,7 +474,7 @@ public class UnitFontLookup {
                             returnVal = 803;
                       }
                   }
-                  if(affiliation == 'H' || affiliation == 'S')//hostile,suspect
+                  else if(affiliation == 'H' || affiliation == 'S')//hostile,suspect
                   {
                       if(battleDimension=='Z')//unknown
                       {
@@ -504,7 +504,7 @@ public class UnitFontLookup {
                           returnVal = 806;
                       }
                   }
-                  if(affiliation == 'N' || affiliation == 'L')//neutral,exercise neutral
+                  else if(affiliation == 'N' || affiliation == 'L')//neutral,exercise neutral
                   {
                       if(battleDimension=='Z')//unknown
                       {
@@ -534,10 +534,10 @@ public class UnitFontLookup {
                           returnVal = 809;
                       }
                   }
-                  else if(affiliation == 'P' ||
+                  else /*if(affiliation == 'P' ||
                      affiliation == 'U' ||
                      affiliation == 'G' ||
-                     affiliation == 'W')
+                     affiliation == 'W')//*/
                   {
 
                       if(battleDimension=='Z' ||//unknown

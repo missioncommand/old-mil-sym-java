@@ -8,6 +8,7 @@ package ArmyC2.C2SD.Utilities;
 import java.awt.Color;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.regex.Pattern;
@@ -21,10 +22,10 @@ public class SymbolUtilities {
 
 
 
-    private static SimpleDateFormat dateFormatFront = new SimpleDateFormat("ddHHmmss");
-    private static SimpleDateFormat dateFormatBack = new SimpleDateFormat("MMMyy");
-    private static SimpleDateFormat dateFormatFull = new SimpleDateFormat("ddHHmmssZMMMyy");
-    private static SimpleDateFormat dateFormatZulu = new SimpleDateFormat("Z");
+    private static SimpleDateFormat dateFormatFront = new SimpleDateFormat("ddHHmmss",Locale.US);
+    private static SimpleDateFormat dateFormatBack = new SimpleDateFormat("MMMyy",Locale.US);
+    private static SimpleDateFormat dateFormatFull = new SimpleDateFormat("ddHHmmssZMMMyy",Locale.US);
+    private static SimpleDateFormat dateFormatZulu = new SimpleDateFormat("Z",Locale.US);
     
   //this regex is from: https://docs.oracle.com/javase/7/docs/api/java/lang/Double.html
   private static final String Digits     = "(\\p{Digit}+)";

@@ -301,6 +301,16 @@ public class SinglePointRenderer {
                 if(charSymbol2Index > 0)
                     gvSymbol2 = _UnitFont.createGlyphVector(frc, symbol2);
 
+
+                //If we're not drawing the frame or fill and keepUnitRatio is false, we want the core symbol to take all the space.
+                if(symbol.getKeepUnitRatio()==false && gvSymbol1 != null && symbol.getIconColor() != null && symbol.getLineColor().getAlpha() == 0 && symbol.getFillColor().getAlpha() == 0)
+                {
+                    gvFill = null;
+                    gvFrameAssumed = null;
+                    gvFrame = null;
+                }
+
+                
                 //check size ratio
                 if(pixelSize > 0 && (charFrameIndex > 0 || charFillIndex > 0))
                 {
@@ -320,7 +330,7 @@ public class SinglePointRenderer {
 
                 }
             }
-
+            
             //resize to pixels
             if(ratio > 0)
             {
@@ -412,7 +422,7 @@ public class SinglePointRenderer {
                 if(gvFrame != null)
                     shapeFrame = gvFrame.getGlyphOutline(0, (int)pixel.getX(), (int)pixel.getY());
                 if(gvFill != null)
-                shapeFill = gvFill.getGlyphOutline(0, (int)pixel.getX(), (int)pixel.getY());
+                    shapeFill = gvFill.getGlyphOutline(0, (int)pixel.getX(), (int)pixel.getY());
                 if(gvSymbol1 != null)
                     shapeSymbol1 = gvSymbol1.getGlyphOutline(0, (int)pixel.getX(), (int)pixel.getY());
                 if(gvSymbol2 != null)
@@ -489,25 +499,40 @@ public class SinglePointRenderer {
                 if(siFill != null)
                     siFill.setLineColor(symbol.getFillColor());//AffiliationColors.FriendlyUnitFillColor);
 
-                
+
+                //Color c1 = lookup.getColor1();
+                Color c1 = null;                
                 if(siSymbol1 != null)
                 {
-                    //Color c1 = lookup.getColor1();
-                    Color c1 = null;
                     
                     if(symbol.getIconColor() != null)
+                    {
                         c1 = symbol.getIconColor();
+                        siSymbol1.setLineColor(new Color(c1.getRed(), c1.getGreen(), 
+                            c1.getBlue(), c1.getAlpha()));
+                    }
                     else
+                    {
                         c1 = lookup.getColor1();
-                    
-                    siSymbol1.setLineColor(new Color(c1.getRed(), c1.getGreen(), 
+                        siSymbol1.setLineColor(new Color(c1.getRed(), c1.getGreen(), 
                             c1.getBlue(), symbol.getLineColor().getAlpha()));
+                    }
+                    
+                    
                 }
                 if(siSymbol2 != null)
                 {
                     Color c2 = lookup.getColor2();
-                    siSymbol2.setLineColor(new Color(c2.getRed(), c2.getGreen(), 
+                    if(c1 == null)
+                    {
+                        siSymbol2.setLineColor(new Color(c2.getRed(), c2.getGreen(), 
                             c2.getBlue(), symbol.getLineColor().getAlpha()));
+                    }
+                    else
+                    {
+                        siSymbol2.setLineColor(new Color(c2.getRed(), c2.getGreen(), 
+                            c2.getBlue(), c1.getAlpha()));
+                    }
                 }
                 
                 //Just for sea mines
@@ -2824,8 +2849,19 @@ public class SinglePointRenderer {
         Polygon arrowHead = null;
         double length = 40;
 
+        char affiliation = symbolCode.charAt(1);
         if(SymbolUtilities.isNBC(symbolCode))
             length = bounds.height / 2;
+        else if((SymbolUtilities.isHQ(symbolCode)) && 
+					(affiliation == 'F' ||
+					affiliation == 'A' ||
+					affiliation == 'D' ||
+					affiliation == 'M' ||
+					affiliation == 'J' ||
+					affiliation == 'K' ||
+					affiliation == 'N' ||
+					affiliation == 'L') == false)
+			length = Math.round(bounds.getHeight() * 0.7);
         else
             length = bounds.height;
         //Boolean drawStaff = false;
@@ -2848,10 +2884,40 @@ public class SinglePointRenderer {
                     scheme == 'O' || scheme == 'E')
         {
             //drawStaff = true;
-            y1 = bounds.getY() + bounds.getHeight();
-            line.moveTo(x1, y1);
-            y1 = y1 + length;
-            line.lineTo(x1, y1);
+            if(SymbolUtilities.isHQ(symbolCode)==false)//has HQ staff to start from
+            {
+                y1 = bounds.getY() + bounds.getHeight();
+                line.moveTo(x1, y1);
+                y1 = y1 + length;
+                line.lineTo(x1, y1);
+            }
+            else
+            {
+                x1 = bounds.getX()+1;
+
+                if(affiliation == 'F' ||
+                    affiliation == 'A' ||
+                    affiliation == 'D' ||
+                    affiliation == 'M' ||
+                    affiliation == 'J' ||
+                    affiliation == 'K' ||
+                    affiliation == 'N' ||
+                    affiliation == 'L')
+                {
+                    y1 = bounds.getY() + bounds.getHeight();
+                    line.moveTo(x1, y1);
+                    y1 = y1 + length;
+                    line.lineTo(x1,y1);
+                }
+                else
+                {
+                    //drawStaff = true;
+                    y1 = bounds.getY() + bounds.getHeight()/2;
+                    line.moveTo(x1, y1);
+                    y1 = y1 + (bounds.getHeight());// * 1.5);
+                    line.lineTo(x1, y1);
+                }
+            }
 
         }
 
