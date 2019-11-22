@@ -188,43 +188,88 @@ public class MilStdSymbol {
      */
     public MilStdSymbol(String symbolID, String uniqueID, ArrayList<Point2D.Double> Coordinates, Map<String, String> modifiers, Boolean keepUnitRatio) {
 
-        if (modifiers == null) {
-            _Properties = new HashMap<String, String>();
-        } else {
-            _Properties = modifiers;
+        if(!(modifiers != null && modifiers.containsKey(MilStdAttributes.SymbologyStandard) && Integer.valueOf(modifiers.get(MilStdAttributes.SymbologyStandard))==2))
+        {
+                
+            if (modifiers == null) {
+                _Properties = new HashMap<String, String>();
+            } else {
+                _Properties = modifiers;
+            }
+
+            if (_Properties.containsKey(MilStdAttributes.Renderer) == true
+                    || _Properties.containsKey(MilStdAttributes.Renderer.toLowerCase()) == true) {
+                isPluginSymbol = true;
+            }
+
+            _UUID = uniqueID;
+            setCoordinates(Coordinates);
+
+            // Set the given symbol id
+            setSymbolID(symbolID);
+
+            // Set up default line and fill colors based on affiliation
+            setLineColor(SymbolUtilities.getLineColorOfAffiliation(_symbolID));
+            //if(SymbolUtilities.isWarfighting(_symbolID))
+            if (SymbolUtilities.hasDefaultFill(_symbolID)) {
+                setFillColor(SymbolUtilities.getFillColorOfAffiliation(_symbolID));
+            }
+                            //if(SymbolUtilities.isNBC(_symbolID) && !(SymbolUtilities.isDeconPoint(symbolID)))
+            //    setFillColor(SymbolUtilities.getFillColorOfAffiliation(_symbolID));
+            setKeepUnitRatio(keepUnitRatio);
+
+            setSymbologyStandard(RendererSettings.getInstance().getSymbologyStandard());
+
+            _DrawAffiliationModifierAsLabel = RendererSettings.getInstance().getDrawAffiliationModifierAsLabel();
+
+            _UseLineInterpolation = RendererSettings.getInstance().getUseLineInterpolation();
+
+            int outlineWidth = RendererSettings.getInstance().getSinglePointSymbolOutlineWidth();
+            if (outlineWidth > 0 && SymbolUtilities.isTacticalGraphic(symbolID)) {
+                this.setOutlineEnabled(true, outlineWidth);
+                this.setOutlineColor(SymbolDraw.getIdealTextBackgroundColor(_LineColor));
+            }
         }
+        else //DO 2525D stuff
+        {
+            if (modifiers == null) {
+                _Properties = new HashMap<String, String>();
+            } else {
+                _Properties = modifiers;
+            }
 
-        if (_Properties.containsKey(MilStdAttributes.Renderer) == true
-                || _Properties.containsKey(MilStdAttributes.Renderer.toLowerCase()) == true) {
-            isPluginSymbol = true;
-        }
+            if (_Properties.containsKey(MilStdAttributes.Renderer) == true
+                    || _Properties.containsKey(MilStdAttributes.Renderer.toLowerCase()) == true) {
+                isPluginSymbol = true;
+            }
 
-        _UUID = uniqueID;
-        setCoordinates(Coordinates);
+            _UUID = uniqueID;
+            setCoordinates(Coordinates);
 
-        // Set the given symbol id
-        setSymbolID(symbolID);
+            // Set the given symbol id
+            setSymbolID(symbolID);
 
-        // Set up default line and fill colors based on affiliation
-        setLineColor(SymbolUtilities.getLineColorOfAffiliation(_symbolID));
-        //if(SymbolUtilities.isWarfighting(_symbolID))
-        if (SymbolUtilities.hasDefaultFill(_symbolID)) {
-            setFillColor(SymbolUtilities.getFillColorOfAffiliation(_symbolID));
-        }
-                        //if(SymbolUtilities.isNBC(_symbolID) && !(SymbolUtilities.isDeconPoint(symbolID)))
-        //    setFillColor(SymbolUtilities.getFillColorOfAffiliation(_symbolID));
-        setKeepUnitRatio(keepUnitRatio);
+            // Set up default line and fill colors based on affiliation
+            setLineColor(Color.BLACK);
+            //if(SymbolUtilities.isWarfighting(_symbolID))
+            /*if (SymbolUtilities.hasDefaultFill(_symbolID)) {
+                setFillColor(SymbolUtilities.getFillColorOfAffiliation(_symbolID));
+            }*/
+                            //if(SymbolUtilities.isNBC(_symbolID) && !(SymbolUtilities.isDeconPoint(symbolID)))
+            //    setFillColor(SymbolUtilities.getFillColorOfAffiliation(_symbolID));
+            setKeepUnitRatio(keepUnitRatio);
 
-        setSymbologyStandard(RendererSettings.getInstance().getSymbologyStandard());
+            setSymbologyStandard(2);//2525D
 
-        _DrawAffiliationModifierAsLabel = RendererSettings.getInstance().getDrawAffiliationModifierAsLabel();
+            _DrawAffiliationModifierAsLabel = RendererSettings.getInstance().getDrawAffiliationModifierAsLabel();
 
-        _UseLineInterpolation = RendererSettings.getInstance().getUseLineInterpolation();
+            _UseLineInterpolation = RendererSettings.getInstance().getUseLineInterpolation();
 
-        int outlineWidth = RendererSettings.getInstance().getSinglePointSymbolOutlineWidth();
-        if (outlineWidth > 0 && SymbolUtilities.isTacticalGraphic(symbolID)) {
-            this.setOutlineEnabled(true, outlineWidth);
-            this.setOutlineColor(SymbolDraw.getIdealTextBackgroundColor(_LineColor));
+            int outlineWidth = RendererSettings.getInstance().getSinglePointSymbolOutlineWidth();
+            if (outlineWidth > 0 && SymbolUtilities.isTacticalGraphic(symbolID)) {
+                this.setOutlineEnabled(true, outlineWidth);
+                this.setOutlineColor(SymbolDraw.getIdealTextBackgroundColor(_LineColor));
+            }
         }
     }
 
@@ -794,8 +839,8 @@ public class MilStdSymbol {
      * @throws RendererException
      */
     public void setSymbolID(String value) {
-
-        if (isPluginSymbol == false) {
+            _symbolID = value;
+        /*if (isPluginSymbol == false) {
             String current = _symbolID;
 
             try {
@@ -849,7 +894,7 @@ public class MilStdSymbol {
                  {
                  ErrorLogger.LogMessage("MilStdSymbol", "setSymbolID", value + " is not a valid symbol ID.");
                  }
-                 }//*/
+                 }//
                             // </editor-fold>
             }// End try
             catch (Exception e) {
@@ -859,7 +904,7 @@ public class MilStdSymbol {
         } else//plugin, don't alter
         {
             _symbolID = value;
-        }
+        }*/
     }	// End set SymbolID
 
     /**

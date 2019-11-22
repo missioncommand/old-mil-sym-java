@@ -841,7 +841,13 @@ public class JavaRenderer implements IJavaRenderer {
                 }
                 
                 symbolID = symbol.getSymbolID();
-                if(SymbolUtilities.isTacticalGraphic(symbolID)==true || pointCount>1)
+                if(symbol.getSymbologyStandard()==2 && symbol.getSymbolID().startsWith("10") && symbol.getSymbolID().substring(4, 6).equals("25") && pointCount > 1)
+                {//2525D multipoint
+                    //send to multipointRendering
+                    _MPR.render(symbol, converter, clipBounds);
+                    //ProcessTGSymbol(symbol, converter,clipBounds);
+                }
+                else if(SymbolUtilities.isTacticalGraphic(symbolID)==true || pointCount>1)
                 {
                      basicSymbolID = SymbolUtilities.getBasicSymbolID(symbol.getSymbolID());
                      symbolDef = _SymbolDefTable.getSymbolDef(basicSymbolID,symbol.getSymbologyStandard());

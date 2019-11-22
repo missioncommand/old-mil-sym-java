@@ -1987,7 +1987,7 @@ public class MultiPointHandler {
                     return ("false: " + symbolID + ", not a recognized code for a parametered basic shape.");
                 }
             } else if (symStd == 2 && symbolID.length() >= 20) /*2525D*/{
-                //take your changes with 2525D support
+                //take your chances with 2525D support
                 return "true";
             } else {
                 return ("symbolID: \"" + symbolID + "\" not recognized.");
