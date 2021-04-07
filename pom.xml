@@ -40,7 +40,7 @@
         <gson.version>2.2.2</gson.version>
         <spring.version>[4.3.17,)</spring.version>
 
-        <junit.version>4.10</junit.version>
+        <junit.version>4.13.1</junit.version>
         <httpunit.version>1.7</httpunit.version>
 
         <maven-compiler-plugin.version>2.3.2</maven-compiler-plugin.version>
