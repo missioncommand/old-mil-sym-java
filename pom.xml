@@ -3,7 +3,7 @@
 
     <groupId>mil.army.missioncommand</groupId>
     <artifactId>mil-sym-java</artifactId>
-    <version>0.1.38D</version>
+    <version>0.1.39</version>
     <packaging>pom</packaging>
 
     <name>mil-sym-java</name>
@@ -38,7 +38,8 @@
         <javaee-web-api.version>6.0</javaee-web-api.version>
         <javaee-api.version>6.0</javaee-api.version>
         <gson.version>2.2.2</gson.version>
-        <spring.version>[4.3.17,)</spring.version>
+        <!-- <spring.version>[4.3.17,)</spring.version> -->
+		<spring.version>[5.3.9,)</spring.version>
 
         <junit.version>4.13.1</junit.version>
         <httpunit.version>1.7</httpunit.version>
