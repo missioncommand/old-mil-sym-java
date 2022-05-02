@@ -1,13 +1,28 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>mil.army.missioncommand</groupId>
+    <groupId>io.github.missioncommand</groupId>
     <artifactId>mil-sym-java</artifactId>
-    <version>0.1.39</version>
+    <version>0.1.40</version>
     <packaging>pom</packaging>
 
     <name>mil-sym-java</name>
-    <description>mil-sym-java build POM</description>
+    <description>MilStd 2525C Renderer</description>
+    <url>https://github.com/missioncommand/mil-sym-java</url>
+	<licenses> 
+		<license>  
+			<name>Apache License Version 2.0</name>              
+			<url>https://opensource.org/licenses/Apache-2.0</url>       
+		</license> 
+	</licenses>
+	
+	<developers>
+		<developer>
+			<name>Michael Spinelli</name>
+			<email></email>
+			<organizationUrl>https://github.com/missioncommand</organizationUrl>
+		</developer>
+	</developers>
 
     <scm>
         <connection>scm:git:https://github.com/missioncommand/mil-sym-java.git</connection>
@@ -15,13 +30,13 @@
         <url>https://github.com/missioncommand/mil-sym-java</url>
     </scm>
 
-    <distributionManagement>
-        <repository>
-            <id>bintray-missioncommand-maven</id>
-            <name>missioncommand-maven</name>
-            <url>https://api.bintray.com/maven/missioncommand/maven/mil-sym-java/;publish=1</url>
-        </repository>
-    </distributionManagement>
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+
 
     <properties>
         <maven.enforcer.mavenVer>3.2.5</maven.enforcer.mavenVer>
@@ -59,38 +74,38 @@
         <dependencies>
 
             <dependency>
-                <groupId>mil.army.missioncommand</groupId>
+                <groupId>io.github.missioncommand</groupId>
                 <artifactId>JavaRenderer</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>mil.army.missioncommand</groupId>
+                <groupId>io.github.missioncommand</groupId>
                 <artifactId>JavaRendererServer</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>mil.army.missioncommand</groupId>
+                <groupId>io.github.missioncommand</groupId>
                 <artifactId>JavaLineArray</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>mil.army.missioncommand</groupId>
+                <groupId>io.github.missioncommand</groupId>
                 <artifactId>RendererPluginInterface</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>mil.army.missioncommand</groupId>
+                <groupId>io.github.missioncommand</groupId>
                 <artifactId>JavaRendererUtils</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>mil.army.missioncommand</groupId>
+                <groupId>io.github.missioncommand</groupId>
                 <artifactId>mil-sym-renderer</artifactId>
                 <version>${project.version}</version>
                 <type>jar</type>
             </dependency>
             <dependency>
-                <groupId>mil.army.missioncommand</groupId>
+                <groupId>io.github.missioncommand</groupId>
                 <artifactId>mil-sym-renderer</artifactId>
                 <version>${project.version}</version>
                 <type>zip</type>
@@ -261,6 +276,21 @@
                     <artifactId>maven-enforcer-plugin</artifactId>
                     <version>${maven-enforcer-plugin.version}</version>
                 </plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>2.5.1</version>
+					<configuration>
+						<tagNameFormat>@{project.version}</tagNameFormat>
+					</configuration>
+					<dependencies>
+						<dependency>
+							<groupId>org.apache.maven.shared</groupId>
+							<artifactId>maven-invoker</artifactId>
+							<version>2.2</version>
+						</dependency>
+					</dependencies>
+				</plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
@@ -279,6 +309,37 @@
                     <artifactId>webstart-maven-plugin</artifactId>
                     <version>${webstart-maven-plugin.version}</version>
                 </plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>flatten-maven-plugin</artifactId>
+					<version>1.1.0</version>
+					<configuration>
+						<updatePomFile>true</updatePomFile>
+						<flattenMode>oss</flattenMode>
+						<pomElements>
+							<distributionManagement>remove</distributionManagement>
+							<repositories>remove</repositories>
+						</pomElements>
+					</configuration>
+					<executions>
+						<!-- enable flattening -->
+						<execution>
+							<id>flatten</id>
+							<phase>process-resources</phase>
+							<goals>
+								<goal>flatten</goal>
+							</goals>
+						</execution>
+						<!-- ensure proper cleanup -->
+						<execution>
+							<id>flatten.clean</id>
+							<phase>clean</phase>
+							<goals>
+								<goal>clean</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
             </plugins>
         </pluginManagement>
 
@@ -366,6 +427,68 @@
                 </plugins>
             </build>
         </profile>
+		<profile>
+			<id>publish</id>
+			  <build>
+				<!-- OSSRH publishing -->
+				<plugins>
+				  <plugin>
+					<groupId>org.sonatype.plugins</groupId>
+					<artifactId>nexus-staging-maven-plugin</artifactId>
+					<version>1.6.7</version>
+					<extensions>true</extensions>
+					<configuration>
+					  <serverId>ossrh</serverId>
+					  <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+					  <autoReleaseAfterClose>true</autoReleaseAfterClose>
+					</configuration>
+				  </plugin>
+				  <!-- Attaching source to comply OSSRH -->
+				  <plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>2.2.1</version>
+					<executions>
+					  <execution>
+						<id>attach-sources</id>
+						<goals>
+						  <goal>jar-no-fork</goal>
+						</goals>
+					  </execution>
+					</executions>
+				  </plugin>
+				  <!-- Attaching java doc to comply OSSRH -->
+				  <plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>2.9.1</version>
+					<executions>
+					  <execution>
+						<id>attach-javadocs</id>
+						<goals>
+						  <goal>jar</goal>
+						</goals>
+					  </execution>
+					</executions>
+				  </plugin>
+				  <!-- GPG file generation to comply OSSRH -->
+				  <plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-gpg-plugin</artifactId>
+					<version>1.5</version>
+					<executions>
+					  <execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+						  <goal>sign</goal>
+						</goals>
+					  </execution>
+					</executions>
+				  </plugin>
+				</plugins>
+			  </build>
+			</profile>
     </profiles>
 
 </project>

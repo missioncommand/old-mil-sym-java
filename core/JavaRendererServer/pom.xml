@@ -2,9 +2,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>mil.army.missioncommand</groupId>
+        <groupId>io.github.missioncommand</groupId>
         <artifactId>mil-sym-java</artifactId>
-        <version>0.1.39</version>
+        <version>0.1.40</version>
         <relativePath>../..</relativePath>
     </parent>
 
@@ -14,7 +14,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>mil.army.missioncommand</groupId>
+            <groupId>io.github.missioncommand</groupId>
             <artifactId>JavaLineArray</artifactId>
         </dependency>
 
