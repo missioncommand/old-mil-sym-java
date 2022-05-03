@@ -33,9 +33,13 @@ mil-sym-java is a project that contains three distinct components:
 
 Version
 ----
+Updated to deploy on MavenCentral.
+Search for mil-sym-renderer.
+groupdID changed to io.github.missioncommand
 
-- **Latest Release Version** - [ ![Download](https://api.bintray.com/packages/missioncommand/maven/mil-sym-java/images/download.svg) ](https://bintray.com/missioncommand/maven/mil-sym-java/_latestVersion)
- 
+https://s01.oss.sonatype.org/#nexus-search;quick~mil-sym-renderer
+
+https://s01.oss.sonatype.org/#nexus-search;quick~mil-sym-service 
 
 Tech
 -----------
