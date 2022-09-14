@@ -41,6 +41,12 @@ https://s01.oss.sonatype.org/#nexus-search;quick~mil-sym-renderer
 
 https://s01.oss.sonatype.org/#nexus-search;quick~mil-sym-service 
 
+Also:  
+
+https://search.maven.org/search?q=a:mil-sym-renderer  
+
+https://search.maven.org/search?q=a:mil-sym-service  
+
 Tech
 -----------
 
