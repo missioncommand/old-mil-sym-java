@@ -3,7 +3,7 @@
 
     <groupId>io.github.missioncommand</groupId>
     <artifactId>mil-sym-java</artifactId>
-    <version>0.1.40</version>
+    <version>0.1.41</version>
     <packaging>pom</packaging>
 
     <name>mil-sym-java</name>
