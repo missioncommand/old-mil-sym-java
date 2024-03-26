@@ -553,7 +553,11 @@ public final class clsChannelUtility {
             
             // Line of contact looks bad with small channel corners extending out
             if (linetype == TacticalLines.LC || linetype == TacticalLines.LC_HOSTILE)
-                factor = 1;
+            {
+                clsUtility.GetLCSegments(pixels2, segments);
+            }
+            else
+                clsUtility.GetSegments(pixels2, segments, factor);
 
 
             clsUtility.GetSegments(pixels2, segments, factor);

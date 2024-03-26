@@ -2152,6 +2152,77 @@ public final class clsUtility {
         }
         return;
     }
+    
+        /**
+     * Called by clsChannelUtility. The segments are used for managing double-backed segments
+     * for channel types. If the new point is double-backed then the segment at that index will be false.
+     *
+     * @param pixels the client points as 2-tuples x,y in pixels
+     * @param segments OUT - the segments
+     */
+    protected static void GetLCSegments(double[] pixels,
+                                        boolean[] segments) {
+        try
+        {
+            int j = 0;
+            ref<double[]> m1 = new ref();
+            ref<double[]> m2 = new ref();
+            long numPoints = 0;
+            boolean bolVertical1 = false;
+            boolean bolVertical2 = false;
+
+            POINT2 pt0F = new POINT2(0, 0);
+            POINT2 pt1F = new POINT2(0, 0);
+            POINT2 pt2F = new POINT2(0, 0);
+
+            segments[0] = true;
+            //used for debugging
+            double[] angles = new double[segments.length];
+            angles[0] = 0f;
+
+            numPoints = pixels.length / 2;
+            for (j = 0; j < numPoints - 2; j++)
+            {
+                pt0F.x = (double) pixels[2 * j];
+                pt0F.y = (double) pixels[2 * j + 1];
+
+                pt1F.x = (double) pixels[2 * j + 2];
+                pt1F.y = (double) pixels[2 * j + 3];
+
+                pt2F.x = (double) pixels[2 * j + 4];
+                pt2F.y = (double) pixels[2 * j + 5];
+
+                double angle1 = Math.atan2(pt1F.y - pt0F.y,
+                        pt1F.x - pt0F.x);
+                double angle2 = Math.atan2(pt1F.y - pt2F.y,
+                        pt1F.x - pt2F.x);
+                double angle = angle1-angle2;// * 180/Math.PI;
+                double degrees = angle * 180/Math.PI;
+
+                if(angle < 0)
+                {
+                    degrees = 360 + degrees;
+                }
+
+                if(degrees < 90)
+                {
+                    segments[j + 1] = false;
+                }
+                else
+                    segments[j + 1] = true;
+
+                angles[j+1] = degrees;
+
+            }	//end for
+        }
+        catch (Exception exc)
+        {
+            //System.out.println(e.getMessage());
+            //clsUtility.WriteFile("Error in clsUtility.GetSegments");
+            ErrorLogger.LogException(_className, "GetLCSegments",
+                    new RendererException("Failed inside GetSegments", exc));
+        }
+    }
 
     /**
      * Sets the color for the current shape depending on the affiliation
