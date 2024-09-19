@@ -593,7 +593,7 @@ public class SymbolUtilities {
        /**
         * Given date, return character String representing
         * which NATO time zone you're in.
-        * @param hour
+        * @param
         * @return 
         */
        private static String getZuluCharFromTimeZoneOffset(Date time)
