@@ -10,6 +10,9 @@ mil-sym-java is a well worn set of java libraries that have been used in US Army
 [Developer's Guide Wiki](https://github.com/missioncommand/mil-sym-java/wiki/Developer's-Guide)  
 [Google Group Discussion Forum](https://groups.google.com/forum/#!forum/mission-command-milstd-renderer)  
 
+See new project for 2525D+ rendering:  
+[mil-sym-java](https://github.com/missioncommand/mil-sym-java)  
+
 MIL-STD-2525
 -----------
 The [MIL-STD-2525] standard defines how to visualize military symbology.  This project provides support for the entire MIL-STD-2525B Change II plus USAS 13-14 and MIL-STD-2525C.  
