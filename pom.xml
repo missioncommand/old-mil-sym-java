@@ -52,7 +52,7 @@
 
         <commons-configuration.version>1.9</commons-configuration.version>
         <commons-lang.version>2.4</commons-lang.version>
-        <commons-io.version>2.7</commons-io.version>
+        <commons-io.version>2.14.0</commons-io.version>
         <commons-collections.version>3.2.2</commons-collections.version>
         <javaee-web-api.version>6.0</javaee-web-api.version>
         <javaee-api.version>6.0</javaee-api.version>
