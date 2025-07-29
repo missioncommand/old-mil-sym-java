@@ -7,7 +7,7 @@ About
 -----------
 mil-sym-java is a well worn set of java libraries that have been used in US Army Mission Command software for years.  In November 2013 Mission Command was given the approval to release and maintain these libraries as public open source.  
 
-[Developer's Guide Wiki](https://github.com/missioncommand/mil-sym-java/wiki/Developer's-Guide)  
+[Developer's Guide Wiki](https://github.com/missioncommand/mil-sym-java/wiki/2525C-Renderer-Overview)  
 [Google Group Discussion Forum](https://groups.google.com/forum/#!forum/mission-command-milstd-renderer)  
 
 See new project for 2525D+ rendering:  
