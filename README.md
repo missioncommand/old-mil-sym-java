@@ -10,8 +10,10 @@ mil-sym-java is a well worn set of java libraries that have been used in US Army
 [Developer's Guide Wiki](https://github.com/missioncommand/mil-sym-java/wiki/2525C-Renderer-Overview)  
 [Google Group Discussion Forum](https://groups.google.com/forum/#!forum/mission-command-milstd-renderer)  
 
-See new project for 2525D+ rendering:  
-[mil-sym-java](https://github.com/missioncommand/mil-sym-java)  
+See new projects for 2525D+ rendering:  
+[Java](https://github.com/missioncommand/mil-sym-java)  
+[Android](https://github.com/missioncommand/mil-sym-android)  
+[TypeScript](https://github.com/missioncommand/mil-sym-ts)  
 
 MIL-STD-2525
 -----------
