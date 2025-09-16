@@ -46,8 +46,8 @@
         <maven.enforcer.mavenVer>3.2.5</maven.enforcer.mavenVer>
         <maven.enforcer.javaVer>[1.7,)</maven.enforcer.javaVer>
 
-        <maven.compiler.source>1.6</maven.compiler.source>
-        <maven.compiler.target>1.6</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <commons-configuration.version>1.9</commons-configuration.version>

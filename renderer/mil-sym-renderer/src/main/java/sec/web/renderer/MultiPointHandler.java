@@ -892,7 +892,8 @@ public class MultiPointHandler {
             }
             if (!isBasicShape) {
                 if (bboxCoords == null) {
-                    mpr.renderWithPolylines(mSymbol, ipc, rect);
+                    Rectangle clipBounds = getOverscanClipBounds(rect, ipc);
+                    mpr.renderWithPolylines(mSymbol, ipc, clipBounds);
                 } else {
                     mpr.renderWithPolylines(mSymbol, ipc, bboxCoords);
                 }
@@ -921,7 +922,7 @@ public class MultiPointHandler {
                     textColor = Color.white;//textColor = "#FFFFFFFF";
                 }
 
-                jsonContent = KMLize(id, name, description, symbolCode, shapes, modifiers, ipc, normalize, textColor);
+                jsonContent = KMLize(id, name, description, symbolCode, shapes, modifiers, ipc, normalize, textColor, mSymbol.get_WasClipped());
                 jsonOutput.append(jsonContent);
 
                 //if there's a symbol fill or line pattern, add to KML//////////
@@ -1519,7 +1520,8 @@ public class MultiPointHandler {
             }
             if (!isBasicShape) {
                 if (bboxCoords == null) {
-                    mpr.renderWithPolylines(mSymbol, ipc, rect);
+                    Rectangle clipBounds = getOverscanClipBounds(rect, ipc);
+                    mpr.renderWithPolylines(mSymbol, ipc, clipBounds);
                 } else {
                     mpr.renderWithPolylines(mSymbol, ipc, bboxCoords);
                 }
@@ -1831,7 +1833,8 @@ public class MultiPointHandler {
 
             //new interface
             IMultiPointRenderer mpr = MultiPointRenderer.getInstance();
-            mpr.renderWithPolylines(mSymbol, ipc, rect);
+            Rectangle clipBounds = getOverscanClipBounds(rect, ipc);
+            mpr.renderWithPolylines(mSymbol, ipc, clipBounds);
             shapes = mSymbol.getSymbolShapes();
             modifiers = mSymbol.getModifierShapes();
 
@@ -1854,7 +1857,7 @@ public class MultiPointHandler {
                 {
                     textColor = Color.white;//textColor = "#FFFFFFFF";
                 }
-                jsonContent = KMLize(id, name, description, symbolCode, shapes, modifiers, ipc, normalize, textColor);
+                jsonContent = KMLize(id, name, description, symbolCode, shapes, modifiers, ipc, normalize, textColor, mSymbol.get_WasClipped());
                 jsonOutput.append(jsonContent);
 
                 //if there's a symbol fill or line pattern, add to KML//////////
@@ -2078,6 +2081,21 @@ public class MultiPointHandler {
         }
     }
 
+    private static Rectangle getOverscanClipBounds(Rectangle rect, IPointConversion ipc) {
+        if (rect == null)
+            return null;
+        double maxWidth = Math.abs(ipc.GeoToPixels(new Point2D.Double(180, 0)).getX() - ipc.GeoToPixels(new Point2D.Double(0, 0)).getX());
+        double maxHeight = Math.abs(ipc.GeoToPixels(new Point2D.Double(0, 90)).getY() - ipc.GeoToPixels(new Point2D.Double(0, -90)).getY());
+        double overScanScale = RendererSettings.getInstance().getOverscanScale();
+        if (rect.width * overScanScale > maxWidth) {
+            overScanScale = maxWidth / rect.width;
+        }
+        if (rect.height * overScanScale > maxHeight) {
+            overScanScale = maxHeight / rect.height;
+        }
+        return new Rectangle((int) (rect.x - (rect.width * (overScanScale - 1)) / 2), (int) (rect.y - (rect.height * (overScanScale - 1)) / 2), (int) (rect.width * overScanScale), (int) (rect.height * overScanScale));
+    }
+
     /**
      * For Mike Deutch testing
      *
@@ -2185,7 +2203,7 @@ public class MultiPointHandler {
                 if (mSymbol.getFillColor() != null) {
                     fillColor = Integer.toHexString(mSymbol.getFillColor().getRGB());//Integer.toHexString(shapeInfo.getFillColor().getRGB()
                 }
-                jsonContent = KMLize(id, name, description, symbolCode, shapes, modifiers, ipc, normalize, mSymbol.getLineColor());
+                jsonContent = KMLize(id, name, description, symbolCode, shapes, modifiers, ipc, normalize, mSymbol.getLineColor(), mSymbol.get_WasClipped());
                 jsonOutput.append(jsonContent);
             }
 
@@ -3036,7 +3054,9 @@ public class MultiPointHandler {
             ArrayList<ShapeInfo> shapes,
             ArrayList<ShapeInfo> modifiers,
             IPointConversion ipc,
-            boolean normalize, Color textColor) {
+            boolean normalize,
+            Color textColor,
+            boolean wasClipped) {
 
         StringBuilder kml = new StringBuilder();
 
@@ -3046,9 +3066,14 @@ public class MultiPointHandler {
         String cdataEnd = "]]>";
 
         int len = shapes.size();
-        kml.append("<Folder id=\"" + id + "\">");
-        kml.append("<name>" + cdataStart + name + cdataEnd + "</name>");
+        kml.append("<Folder id=\"").append(id).append("\">");
+        kml.append("<name>").append(cdataStart).append(name).append(cdataEnd).append("</name>");
         kml.append("<visibility>1</visibility>");
+        kml.append("<description>").append(cdataStart).append(description).append(cdataEnd).append("</description>");
+        kml.append("<ExtendedData>");
+        kml.append("<Data name=\"symbolID\"><value>").append(symbolCode).append("</value></Data>");
+        kml.append("<Data name=\"wasClipped\"><value>").append(wasClipped).append("</value></Data>");
+        kml.append("</ExtendedData>");
 
         for (int i = 0; i < len; i++) {
 
@@ -3412,7 +3437,6 @@ public class MultiPointHandler {
         String cdataEnd = "]]>";
 
         kml.append("<Placemark>");//("<Placemark id=\"" + id + "_mg" + "\">");
-        kml.append("<description>" + cdataStart + "<b>" + name + "</b><br/>" + "\n" + description + cdataEnd + "</description>");
         //kml.append("<Style id=\"" + lineStyleId + "\">");
         kml.append("<Style>");
 

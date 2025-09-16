@@ -142,6 +142,8 @@ public class RendererSettings {
     //acevedo - 11/29/2017 - adding option to render only 2 labels.
     private boolean _TwoLabelOnly = true;
 
+    private double _overscanScale = 1.0;
+
     //acevedo - 12/8/17 - allow the setting of affiliation colors.
     private   Color _friendlyUnitFillColor = AffiliationColors.FriendlyUnitFillColor;
     /// <summary>
@@ -794,6 +796,21 @@ public class RendererSettings {
  	{
  		_TwoLabelOnly = TwoLabelOnly;
  	}
+
+    /**
+     * Optionally expand multipoint rendering outside bounding box by a scale factor.
+     * Useful when panning map before rendering with updated bounding box.
+     * Only referenced when bounding box is a valid rectangle.
+     * For example, setting overscanScale to 3 would render all shapes within range 3 * the width and 3 * the height of the bounding box
+     * @param overscanScale default is 1 and minimum is 1
+     */
+    public void setOverscanScale(double overscanScale) {
+        this._overscanScale = Math.max(overscanScale, 1);
+    }
+
+    public double getOverscanScale() {
+        return this._overscanScale;
+    }
 
     /**
      * get the preferred fill affiliation color for units.

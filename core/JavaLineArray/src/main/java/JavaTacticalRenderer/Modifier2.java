@@ -5819,16 +5819,18 @@ public class Modifier2 {
                         x = (int) x1 - (int) stringWidth / 2;
                         y = (int) y1 + (int) (stringHeight / 2) + (int) (1.25 * lineFactor * stringHeight);
 
+                        int mpy = (int)(y1 + (1.25 * lineFactor * stringHeight));//need the line factor but not the offset
+                        
                         tx = new AffineTransform();
                         tx.translate(x, y);
 
                         //pt2 = new POINT2(midPt.x + stringWidth / 2 - 1, midPt.y);
                         //pt3 = new POINT2(midPt.x + 1.5 * stringWidth + 1, midPt.y);
-                        glyphPosition = new Point(x, y);
+                        glyphPosition = new Point(x, y);//Placement for Graphics2D
                         //diagnostic
                         //glyphPosition = new Point((int)x1, y);
                         justify = ShapeInfo.justify_center;
-                        modifierPosition = new Point2D.Double(x1, y);
+                        modifierPosition = new Point2D.Double(x1, mpy);//Modifier Anchor position for KML/GJSON
                         break;
                     case screen:    //for SCREEN, GUARD, COVER, not currently used
                         if (tg.Pixels.size() >= 14) {

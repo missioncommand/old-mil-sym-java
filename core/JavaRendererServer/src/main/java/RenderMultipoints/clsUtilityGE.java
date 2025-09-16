@@ -1203,6 +1203,7 @@ public final class clsUtilityGE {
                 case TacticalLines.CHEM:
                 case TacticalLines.RAD:
                 case TacticalLines.WFZ:
+                case TacticalLines.LAA:
                     hatch=Hatch_BackwardDiagonal;
                     break;
                 case TacticalLines.OBSAREA:
@@ -1218,9 +1219,6 @@ public final class clsUtilityGE {
                             shapes.remove(j);
                     }
                     hatch=Hatch_BackwardDiagonal;
-                    break;
-                case TacticalLines.LAA:
-                    hatch=Hatch_ForwardDiagonal;
                     break;
                 default:
                     if(hatch<=0)
