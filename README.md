@@ -9,6 +9,7 @@ mil-sym-java is a well worn set of java libraries that have been used in US Army
 
 [Developer's Guide Wiki](https://github.com/missioncommand/mil-sym-java/wiki/2525C-Renderer-Overview)  
 [Google Group Discussion Forum](https://groups.google.com/forum/#!forum/mission-command-milstd-renderer)  
+[JavaDocs](https://missioncommand.github.io/javadoc/2525C/java/index.html)  
 
 See new projects for 2525D+ rendering:  
 [Java](https://github.com/missioncommand/mil-sym-java)  
@@ -41,12 +42,6 @@ Version
 Updated to deploy on MavenCentral.
 Search for mil-sym-renderer.
 groupdID changed to io.github.missioncommand
-
-https://s01.oss.sonatype.org/#nexus-search;quick~mil-sym-renderer
-
-https://s01.oss.sonatype.org/#nexus-search;quick~mil-sym-service 
-
-Also:  
 
 https://search.maven.org/search?q=a:mil-sym-renderer  
 
