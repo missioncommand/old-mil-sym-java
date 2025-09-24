@@ -25,20 +25,16 @@
 	</developers>
 
     <scm>
-        <connection>scm:git:https://github.com/missioncommand/mil-sym-java.git</connection>
-        <developerConnection>scm:git:https://github.com/missioncommand/mil-sym-java.git</developerConnection>
-        <url>https://github.com/missioncommand/mil-sym-java</url>
+        <connection>scm:git:https://github.com/missioncommand/old-mil-sym-java.git</connection>
+        <developerConnection>scm:git:https://github.com/missioncommand/old-mil-sym-java.git</developerConnection>
+        <url>https://github.com/missioncommand/old-mil-sym-java</url>
     </scm>
 
 	<distributionManagement>
-		<repository>
-			<id>ossrh</id>
-			<url>https://s01.oss.sonatype.org/content/repositories/releases</url>
-		</repository>
-		<snapshotRepository>
-			<id>ossrh</id>
-			<url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
-		</snapshotRepository>
+	  <repository>
+		<id>central</id>
+		<url>https://central.sonatype.com/api/v1/publisher</url>
+	  </repository>
 	</distributionManagement>
 
 
@@ -51,8 +47,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <commons-configuration.version>1.9</commons-configuration.version>
-        <commons-lang.version>2.4</commons-lang.version>
-        <commons-io.version>2.7</commons-io.version>
+        <commons-lang.version>2.6</commons-lang.version>
+        <commons-io.version>2.14.0</commons-io.version>
         <commons-collections.version>3.2.2</commons-collections.version>
         <javaee-web-api.version>6.0</javaee-web-api.version>
         <javaee-api.version>6.0</javaee-api.version>
@@ -68,10 +64,10 @@
         <maven-jar-plugin.version>2.3.1</maven-jar-plugin.version>
         <maven-assembly-plugin.version>2.3</maven-assembly-plugin.version>
         <maven-clean-plugin.version>2.5</maven-clean-plugin.version>
-        <maven-war-plugin.version>2.1.1</maven-war-plugin.version>
+        <maven-war-plugin.version>3.4.0</maven-war-plugin.version>
         <maven-enforcer-plugin.version>1.4.1</maven-enforcer-plugin.version>
-        <maven-javadoc-plugin.version>2.10.4</maven-javadoc-plugin.version>
-        <maven-source-plugin.version>2.4</maven-source-plugin.version>
+        <maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
+        <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <webstart-maven-plugin.version>1.0-beta-6</webstart-maven-plugin.version>
     </properties>
 
@@ -300,6 +296,22 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
                     <version>${maven-javadoc-plugin.version}</version>
+					<executions>
+						<execution>
+						<id>attach-javadocs</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+						<configuration>
+							<failOnError>false</failOnError>
+							<doclint>none</doclint> <!-- This is the correct way to disable doclint -->
+							<additionalOptions>
+								<additionalOption>-quiet</additionalOption> <!-- Optional: suppress verbose output -->
+							</additionalOptions>
+						</configuration>
+						</execution>
+					  </executions>
                     <configuration>
                         <encoding>${project.build.sourceEncoding}</encoding>
                     </configuration>
@@ -308,6 +320,15 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
                     <version>${maven-source-plugin.version}</version>
+					<executions>
+						<execution>
+						<id>attach-sources</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+						</execution>
+					</executions>
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
@@ -345,6 +366,20 @@
 						</execution>
 					</executions>
 				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-gpg-plugin</artifactId>
+					<version>3.1.0</version>
+					<executions>
+						<execution>
+							<id>sign-artifacts</id>
+							<phase>verify</phase>
+							<goals>
+							<goal>sign</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
             </plugins>
         </pluginManagement>
 
@@ -373,6 +408,29 @@
                     </execution>
                 </executions>
             </plugin>
+			<plugin>
+			  <groupId>org.apache.maven.plugins</groupId>
+			  <artifactId>maven-gpg-plugin</artifactId>
+			  <version>3.1.0</version>
+			  <executions>
+				<execution>
+				  <id>sign-artifacts</id>
+				  <phase>verify</phase>
+				  <goals>
+					<goal>sign</goal>
+				  </goals>
+				</execution>
+			  </executions>
+			</plugin>
+			<plugin>
+			  <groupId>org.sonatype.central</groupId>
+			  <artifactId>central-publishing-maven-plugin</artifactId>
+			  <version>0.8.0</version>
+			  <extensions>true</extensions>
+			  <configuration>
+				<publishingServerId>central</publishingServerId>
+			  </configuration>
+			</plugin>
         </plugins>
     </build>
 
@@ -420,12 +478,19 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
+						<version>3.5.0</version>
                         <executions>
                             <execution>
                                 <id>attach-javadocs</id>
                                 <goals>
                                     <goal>jar</goal>
                                 </goals>
+								<configuration>
+									<failOnError>false</failOnError> <!-- Don't fail the build -->
+									<additionalJOptions>
+										<additionalJOption>-Xdoclint:none</additionalJOption> <!-- Suppress doclint -->
+									</additionalJOptions>
+								</configuration>
                             </execution>
                         </executions>
                     </plugin>
@@ -480,7 +545,7 @@
 				  <plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-gpg-plugin</artifactId>
-					<version>1.5</version>
+					<version>3.1.0</version>
 					<executions>
 					  <execution>
 						<id>sign-artifacts</id>
@@ -495,5 +560,4 @@
 			  </build>
 			</profile>
     </profiles>
-
 </project>
