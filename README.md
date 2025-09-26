@@ -16,7 +16,7 @@ See new projects for 2525D+ rendering:
 [Android](https://github.com/missioncommand/mil-sym-android)  
 [TypeScript](https://github.com/missioncommand/mil-sym-ts)  
 
-Other 2525C releases
+Other 2525C releases  
 [JavaScript](https://github.com/missioncommand/mil-sym-ts/wiki/2525C-Renderer-Overview)  
 [Android](https://github.com/missioncommand/mil-sym-android/wiki/2525C-Renderer-Overview)  
 
