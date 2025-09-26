@@ -16,6 +16,10 @@ See new projects for 2525D+ rendering:
 [Android](https://github.com/missioncommand/mil-sym-android)  
 [TypeScript](https://github.com/missioncommand/mil-sym-ts)  
 
+Other 2525C releases
+[JavaScript](https://github.com/missioncommand/mil-sym-ts/wiki/2525C-Renderer-Overview)  
+[Android](https://github.com/missioncommand/mil-sym-android/wiki/2525C-Renderer-Overview)  
+
 MIL-STD-2525
 -----------
 The [MIL-STD-2525] standard defines how to visualize military symbology.  This project provides support for the entire MIL-STD-2525B Change II plus USAS 13-14 and MIL-STD-2525C.  
