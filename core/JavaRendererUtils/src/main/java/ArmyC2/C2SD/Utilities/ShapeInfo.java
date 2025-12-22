@@ -400,6 +400,14 @@ public class ShapeInfo {
     {
         texturePaint=value;
     }
+    public BufferedImage getPatternFillImage()
+    {
+        if(texturePaint != null && texturePaint.getImage() != null)
+            return texturePaint.getImage();
+        else
+            return null;
+    }
+    
     
     public int getFillStyle()
     {

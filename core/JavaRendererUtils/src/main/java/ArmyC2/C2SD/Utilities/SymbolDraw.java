@@ -435,7 +435,7 @@ public class SymbolDraw {
                     siOutline3.setLineColor(backgroundColor);
                     siOutline4.setLineColor(backgroundColor);
 
-                    Stroke tempStroke = new BasicStroke(1,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 3);
+                    BasicStroke tempStroke = new BasicStroke(1,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 3);
                     siOutline1.setStroke(tempStroke);
                     siOutline2.setStroke(tempStroke);
                     siOutline3.setStroke(tempStroke);
@@ -490,7 +490,7 @@ public class SymbolDraw {
                     siOutline3.setLineColor(backgroundColor);
                     siOutline4.setLineColor(backgroundColor);
 
-                    Stroke tempStroke = new BasicStroke(1,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 3);
+                    BasicStroke tempStroke = new BasicStroke(1,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 3);
                     siOutline1.setStroke(tempStroke);
                     siOutline2.setStroke(tempStroke);
                     siOutline3.setStroke(tempStroke);
@@ -534,7 +534,7 @@ public class SymbolDraw {
                     siOutline3.setLineColor(backgroundColor);
                     siOutline4.setLineColor(backgroundColor);
 
-                    Stroke tempStroke = new BasicStroke(1,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 3);
+                    BasicStroke tempStroke = new BasicStroke(1,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 3);
                     siOutline1.setStroke(tempStroke);
                     siOutline2.setStroke(tempStroke);
                     siOutline3.setStroke(tempStroke);
@@ -680,7 +680,7 @@ public class SymbolDraw {
                     siOutline7.setLineColor(backgroundColor);
                     siOutline8.setLineColor(backgroundColor);
 
-                    Stroke tempStroke = new BasicStroke(1,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 3);
+                    BasicStroke tempStroke = new BasicStroke(1,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 3);
                     siOutline1.setStroke(tempStroke);
                     siOutline2.setStroke(tempStroke);
                     siOutline3.setStroke(tempStroke);
@@ -756,7 +756,7 @@ public class SymbolDraw {
                     siOutline7.setLineColor(backgroundColor);
                     siOutline8.setLineColor(backgroundColor);
 
-                    Stroke tempStroke = new BasicStroke(1,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 3);
+                    BasicStroke tempStroke = new BasicStroke(1,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 3);
                     siOutline1.setStroke(tempStroke);
                     siOutline2.setStroke(tempStroke);
                     siOutline3.setStroke(tempStroke);
@@ -818,7 +818,7 @@ public class SymbolDraw {
                     siOutline7.setLineColor(backgroundColor);
                     siOutline8.setLineColor(backgroundColor);
 
-                    Stroke tempStroke = new BasicStroke(1,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 3);
+                    BasicStroke tempStroke = new BasicStroke(1,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 3);
                     siOutline1.setStroke(tempStroke);
                     siOutline2.setStroke(tempStroke);
                     siOutline3.setStroke(tempStroke);

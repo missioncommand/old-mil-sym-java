@@ -140,7 +140,7 @@ public class MultiPointHandler {
      * @param pt2d
      * @return
      */
-    private static Point2D NormalizeCoordToGECoord(Point2D pt2d) {
+    protected static Point2D NormalizeCoordToGECoord(Point2D pt2d) {
         Point2D ptGeo = null;
         try {
             double x = pt2d.getX(), y = pt2d.getY();
@@ -841,7 +841,14 @@ public class MultiPointHandler {
 
             MilStdSymbol mSymbol = new MilStdSymbol(symbolCode, null, geoCoords, null);
 
-            mSymbol.setUseDashArray(false);
+            if(format == 3)//GEOSVG
+            {
+                mSymbol.setUseDashArray(true);
+                //mSymbol.setUsePatternFill(true);
+            }
+            else
+                mSymbol.setUseDashArray(false);
+            
             //set milstd symbology standard.
             mSymbol.setSymbologyStandard(symStd);
 
@@ -987,6 +994,14 @@ public class MultiPointHandler {
                 jsonOutput.append(String.valueOf(mSymbol.get_WasClipped()));
                 jsonOutput.append("\"}}");
 
+            }
+            else if(format == 3)//GEOSVG
+            {
+                String textColor = mSymbol.getTextColor() != null ? SymbolUtilities.colorToHexString(mSymbol.getTextColor(), false) : "";
+                String backgroundColor = mSymbol.getTextBackgroundColor() != null ? SymbolUtilities.colorToHexString(mSymbol.getTextBackgroundColor(), false) : "";
+                //returns an svg with a geoTL and geoBR value to use to place the canvas on the map
+                jsonContent = MultiPointHandlerSVG.GeoSVGize(id, name, description, symbolCode, shapes, modifiers, ipc, normalize, textColor, backgroundColor, mSymbol.get_WasClipped());
+                jsonOutput.append(jsonContent);
             }
 
         } catch (Exception exc) {
@@ -1766,7 +1781,15 @@ public class MultiPointHandler {
 
         try {
             MilStdSymbol mSymbol = new MilStdSymbol(symbolCode, null, geoCoords, null);
-            mSymbol.setUseDashArray(false);
+            
+            if(format == 3)//GEOSVG
+            {
+                mSymbol.setUseDashArray(true);
+                //mSymbol.setUsePatternFill(true);
+            }
+            else
+                mSymbol.setUseDashArray(false);
+            
             //set milstd symbology standard.
             mSymbol.setSymbologyStandard(symStd);
 
@@ -1896,6 +1919,14 @@ public class MultiPointHandler {
                 jsonOutput.append(String.valueOf(mSymbol.get_WasClipped()));
                 jsonOutput.append("\"}}");
 
+            }
+            else if (format == 3)//GEOSVG 
+            {
+                String textColor = mSymbol.getTextColor() != null ? SymbolUtilities.colorToHexString(mSymbol.getTextColor(), false) : "";
+                String backgroundColor = mSymbol.getTextBackgroundColor() != null ? SymbolUtilities.colorToHexString(mSymbol.getTextBackgroundColor(), false) : "";
+                //returns an svg with a geoTL and geoBR value to use to place the canvas on the map
+                jsonContent = MultiPointHandlerSVG.GeoSVGize(id, name, description, symbolCode, shapes, modifiers, ipc, normalize, textColor, backgroundColor, mSymbol.get_WasClipped());
+                jsonOutput.append(jsonContent);
             }
 
         } catch (Exception exc) {
