@@ -1068,10 +1068,16 @@ public class MilStdSymbol {
             if (_ModifierShapes != null && _ModifierShapes.size() > 0) {
                 int symbolCount2 = _ModifierShapes.size();
 
-                for (int lcv2 = 0; lcv2 < symbolCount2; lcv2++) {
-                    temp = _ModifierShapes.get(lcv2).getBounds();
+                for (int lcv2 = 0; lcv2 < symbolCount2; lcv2++) 
+                {
+                    if(_ModifierShapes.get(lcv2).getShapeType() == ShapeInfo.SHAPE_TYPE_MODIFIER)
+                    {
+                        siTemp = _ModifierShapes.get(lcv2);
+                        
+                        temp = siTemp.getBounds();
 
-                    bounds = bounds.union(temp);
+                        bounds = bounds.union(temp);
+                    }
 
                 }
 

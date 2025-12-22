@@ -291,7 +291,7 @@ public class ShapeInfo {
             return null;
 
 
-        if(this.affineTransform != null)
+        /*if(this.affineTransform != null)
         {
             //position set by affinetransform
             
@@ -299,7 +299,7 @@ public class ShapeInfo {
             sTemp = affineTransform.createTransformedShape(temp);
             temp = sTemp.getBounds();
 
-        }
+        }//*/
 
         return temp;
     }

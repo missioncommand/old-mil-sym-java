@@ -146,51 +146,64 @@ public class SymbolDraw {
 
                             if(shapes != null)
                             {
+                                int outlineWidth = RendererSettings.getInstance().getTextOutlineWidth()+2;
+                                
                                 for(int i = 0; i < shapes.size(); i++)
                                 {
                                     siTemp = shapes.get(i);
-
-                                    if(siTemp.getAffineTransform() != null)
+                                    if(siTemp.getShapeType() != ShapeInfo.SHAPE_TYPE_MODIFIER_FILL)
                                     {
-                                        AffineTransform atTemp = (AffineTransform)siTemp.getAffineTransform().clone();
-                                        atTemp.preConcatenate(AffineTransform.getTranslateInstance(offsetX, offsetY));
-                                        destination.setTransform(atTemp);
-                                         //destination.setTransform(siTemp.getAffineTransform());
-                                    }
-                                    else
-                                        destination.translate(offsetX, offsetY);
-
-                                    if(siTemp.getStroke() != null)
-                                        destination.setStroke(siTemp.getStroke());
-
-                                    if(siTemp.getFillColor() != null)
-                                    {
-                                        destination.setColor(siTemp.getFillColor());
-                                        if(siTemp.getShape() != null)
-                                            destination.fill(siTemp.getShape());
-                                        else//for deutch.  needs to set line color for text
+                                        if(siTemp.getAffineTransform() != null)
                                         {
-                                            siTemp.setLineColor(siTemp.getFillColor());
-                                            siTemp.setFillColor(null);
+                                            AffineTransform atTemp = (AffineTransform)siTemp.getAffineTransform().clone();
+                                            atTemp.preConcatenate(AffineTransform.getTranslateInstance(offsetX, offsetY));
+                                            destination.setTransform(atTemp);
+                                             //destination.setTransform(siTemp.getAffineTransform());
                                         }
+                                        else//*/
+                                            destination.translate(offsetX, offsetY);
 
-                                    }
-                                    if(siTemp.getLineColor() != null)//change to else if when Deutch fixes above
-                                    {
-                                        destination.setColor(siTemp.getLineColor());
+                                        if(siTemp.getStroke() != null)
+                                            destination.setStroke(siTemp.getStroke());
 
-                                        Point2D point = null;
-                                        if(siTemp.getShape() != null)
-                                            destination.draw(siTemp.getShape());
-                                        else if(siTemp.getGlyphVector() != null)
+                                        if(siTemp.getFillColor() != null)
                                         {
-                                            point = siTemp.getGlyphPosition();
-                                            destination.drawGlyphVector(siTemp.getGlyphVector(), (float)point.getX(), (float)point.getY());
+                                            destination.setColor(siTemp.getFillColor());
+                                            if(siTemp.getShape() != null)
+                                                destination.fill(siTemp.getShape());
+                                            else//for deutch.  needs to set line color for text
+                                            {
+                                                siTemp.setLineColor(siTemp.getFillColor());
+                                                siTemp.setFillColor(null);
+                                            }
+
                                         }
-                                        else if(siTemp.getTextLayout() != null)
+                                        if(siTemp.getLineColor() != null)//change to else if when Deutch fixes above
                                         {
-                                            point = siTemp.getGlyphPosition();
-                                            siTemp.getTextLayout().draw(destination, (float)point.getX(), (float)point.getY());
+                                            destination.setColor(siTemp.getLineColor());
+
+                                            Point2D point = null;
+                                            if(siTemp.getShape() != null)
+                                                destination.draw(siTemp.getShape());
+                                            else if(siTemp.getGlyphVector() != null)
+                                            {
+                                                point = siTemp.getGlyphPosition();
+                                                destination.drawGlyphVector(siTemp.getGlyphVector(), (float)point.getX(), (float)point.getY());
+                                            }
+                                            else if(siTemp.getTextLayout() != null)
+                                            {
+                                                point = siTemp.getGlyphPosition();
+                                                //siTemp.getTextLayout().draw(destination, (float)point.getX()+offsetX, (float)point.getY()+offsetY);
+                                                //Shape outline = siTemp.getTextLayout().getOutline(AffineTransform.getTranslateInstance(point.getX(), point.getY()));
+                                                Shape outline = siTemp.getTextLayout().getOutline(AffineTransform.getTranslateInstance(0 , 0));
+                                                destination.setStroke(new BasicStroke(outlineWidth));
+                                                destination.setColor(SymbolDraw.getIdealTextBackgroundColor(symbol.getLineColor()));
+                                                //destination.setColor(Color.BLUE);
+                                                destination.draw(outline);
+                                                destination.setColor(symbol.getLineColor());
+                                                //destination.setColor(Color.RED);
+                                                destination.fill(outline);
+                                            }
                                         }
                                     }
                                     
