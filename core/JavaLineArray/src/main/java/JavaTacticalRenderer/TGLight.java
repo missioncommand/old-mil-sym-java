@@ -414,52 +414,55 @@ public class TGLight {
             }
             //build the echelon symbol from the echelon
             //regarless of symbolId.length
-            if (echelon.equals("M")) //REGION
+            if(echelon != null)
             {
-                echelonSymbol = "XXXXXX";
-            } else if (echelon.equals("L")) //FRONT
-            {
-                echelonSymbol = "XXXXX";
-            } else if (echelon.equals("K")) //ARMY
-            {
-                echelonSymbol = "XXXX";
-            } else if (echelon.equals("J")) //CORPS
-            {
-                echelonSymbol = "XXX";
-            } else if (echelon.equals("I")) //DIVISION
-            {
-                echelonSymbol = "XX";
-            } else if (echelon.equals("H")) //BRIGADE
-            {
-                echelonSymbol = "X";
-            } else if (echelon.equals("G")) //REGIMENT
-            {
-                echelonSymbol = "III";
-            } else if (echelon.equals("F")) //BATTALION
-            {
-                echelonSymbol = "II";
-            } else if (echelon.equals("E")) //COMPANY
-            {
-                echelonSymbol = "I";
-            } else if (echelon.equals("D")) //PLATOON
-            {
-                letter = (char) 9679;
-                s = Character.toString(letter);
-                echelonSymbol = s + s + s;
-            } else if (echelon.equals("C")) //SECTION
-            {
-                letter = (char) 9679;
-                s = Character.toString(letter);
-                echelonSymbol = s + s;
-            } else if (echelon.equals("B")) //SQUAD
-            {
-                letter = (char) 9679;
-                s = Character.toString(letter);
-                echelonSymbol = s;
-            } else if (echelon.equals("A")) //GROUP
-            {
-                letter = (char) 216;
-                echelonSymbol = Character.toString(letter);
+                if (echelon.equals("M")) //REGION
+                {
+                    echelonSymbol = "XXXXXX";
+                } else if (echelon.equals("L")) //FRONT
+                {
+                    echelonSymbol = "XXXXX";
+                } else if (echelon.equals("K")) //ARMY
+                {
+                    echelonSymbol = "XXXX";
+                } else if (echelon.equals("J")) //CORPS
+                {
+                    echelonSymbol = "XXX";
+                } else if (echelon.equals("I")) //DIVISION
+                {
+                    echelonSymbol = "XX";
+                } else if (echelon.equals("H")) //BRIGADE
+                {
+                    echelonSymbol = "X";
+                } else if (echelon.equals("G")) //REGIMENT
+                {
+                    echelonSymbol = "III";
+                } else if (echelon.equals("F")) //BATTALION
+                {
+                    echelonSymbol = "II";
+                } else if (echelon.equals("E")) //COMPANY
+                {
+                    echelonSymbol = "I";
+                } else if (echelon.equals("D")) //PLATOON
+                {
+                    letter = (char) 9679;
+                    s = Character.toString(letter);
+                    echelonSymbol = s + s + s;
+                } else if (echelon.equals("C")) //SECTION
+                {
+                    letter = (char) 9679;
+                    s = Character.toString(letter);
+                    echelonSymbol = s + s;
+                } else if (echelon.equals("B")) //SQUAD
+                {
+                    letter = (char) 9679;
+                    s = Character.toString(letter);
+                    echelonSymbol = s;
+                } else if (echelon.equals("A")) //GROUP
+                {
+                    letter = (char) 216;
+                    echelonSymbol = Character.toString(letter);
+                }
             }
         } catch (Exception exc) {
             ErrorLogger.LogException(_className, "set_SymbolId",

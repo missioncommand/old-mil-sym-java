@@ -1307,6 +1307,301 @@ public class MilStdSymbol {
     public boolean get_WasClipped() {
         return _wasClipped;
     }
+    
+    
+    /**
+     * Determines if the symbol has integral or modifier/amplifier text that would
+     * be impacted if the maps is zoomed in or out after initial draw.
+     * @return 0=not sensitive, 1=slightly little zoom in sensitive, 2=zoom in sensitive, 3=zoom in/out sensitive
+     */
+    public int isTextScaleSensitive()
+    {
+        ArrayList<ShapeInfo> modifiers = this.getModifierShapes();
+        if(_Properties == null)
+            return 0;//no scale sensitive text
+        if (_Properties.isEmpty())
+            return 0;
+        else if(_symbolID.startsWith("G"))
+        {
+            String id = SymbolUtilities.getBasicSymbolID(_symbolID);
+            SymbolDef sd = SymbolDefTable.getInstance().getSymbolDef(id, this.getSymbologyStandard());
+            if(sd != null)
+            {
+                int dr = sd.getDrawCategory();
+                switch (dr)
+                {
+                    case SymbolDef.DRAW_CATEGORY_ARROW:
+                        if(_Properties.containsKey(ModifiersTG.W_DTG_1) ||
+                                _Properties.containsKey(ModifiersTG.W1_DTG_2))
+                            return 3;
+                        else
+                            return 0;
+
+                    case SymbolDef.DRAW_CATEGORY_LINE://Linear Targets (2407##)
+                        if(id.startsWith("G*F*LT"))
+                        {
+                            if(_Properties.containsKey(ModifiersTG.T1_UNIQUE_DESIGNATION_2))
+                                return 3;
+                            else if(_Properties.containsKey(ModifiersTG.T_UNIQUE_DESIGNATION_1))
+                                return 2;
+                            else
+                                return 0;    
+                        }
+                        break;
+                    case SymbolDef.DRAW_CATEGORY_RECTANGULAR_PARAMETERED_AUTOSHAPE:
+                        if(modifiers != null && modifiers.size() > 1)
+                            return 3;
+                        else
+                            return 0;
+                    case SymbolDef.DRAW_CATEGORY_CIRCULAR_PARAMETERED_AUTOSHAPE:
+                        if(modifiers != null && modifiers.size() > 1)
+                            return 3;
+                        else
+                            return 0;
+
+                    default:
+                        break;
+                }
+            }
+
+            switch (id)
+            {
+
+                //A Little Zoom in sensitive (1)
+                case "G*G*GLP---****X"://Phase line, only 5% sensitive
+                case "G*G*DLF---****X"://Forward Edge of Battle, only 5% sensitive
+                case "G*S*LCM---****X"://Moving Convoy
+                case "G*S*LCH---****X"://Halted Convoy
+                    return 1;
+
+                //Zoom in sensitive (2)
+                case "G*G*GLL---****X"://Light Line
+                case "G*G*OLF---****X"://Final Coordination Line
+                case "G*G*OLL---****X"://Limit of Advance
+                case "G*G*OLT---****X"://Line of Departure
+                case "G*G*OLC---****X"://Line of Departure / Line of Contact
+                case "G*G*OLP---****X"://Probable Line of Deployment
+                case "G*G*SLB---****X"://Bridgehead Line
+                case "G*G*SLH---****X"://Holding Line
+                case "G*G*SLR---****X"://Release Line
+                case "G*G*SAN---****X"://Named Area of Interest Line (NAI)
+                case "G*S*LRM---****X"://Main Supply Route (MSR)
+                case "G*S*LRO---****X"://One Way Traffic
+                case "G*S*LRW---****X"://Two Way Traffic
+                case "G*S*LRT---****X"://Alternating Traffic
+                case "G*S*LRA---****X"://Alternate Supply Route (ASR)
+                    return 2;
+                case "G*G*GLF---****X"://FLOT
+                case "G*G*GLC---****X"://LOC
+                    if(SymbolUtilities.getAffiliation(_symbolID).equals("H"))
+                        return 2;
+                    else
+                        return 1;
+
+                    //Very Zoom in/out sensitive (multi-line text) (3)
+                    //friendly and more than 1 text
+                    //Hostile and more than 3 text assuming ENY is present
+                case "G*G*GLB---****X"://boundary line
+                    if(_Properties.containsKey(ModifiersTG.T_UNIQUE_DESIGNATION_1) ||
+                            _Properties.containsKey(ModifiersTG.T1_UNIQUE_DESIGNATION_2))
+                        return 3;
+                    else
+                        return 0;
+
+
+                case "G*G*GAY---****X"://Limited Access Area if sector 1 modifier present
+                    if(_Properties.containsKey(ModifiersTG.H_ADDITIONAL_INFO_1))
+                        return 3;
+                    else
+                        return 0;
+
+
+                //Labels all contained in area but can drift away from each-other or overlap
+                case "G*G*GAG---****X": //Generic
+                case "G*G*AAH---****X": //High-Density Airspace Control Zone
+                case "G*G*AAR---****X": //Restricted Operations Zone (ROZ)
+                case "G*G*AAM---****X": //Missile Engagement Zone (MEZ)
+                case "G*G*AAML--****X": //Low (Altitude) Missile Engagement Zone (LOMEZ)
+                case "G*G*AAMH--****X": //High (Altitude) Missile Engagement Zone (HIMEZ)
+                case "G*G*AAF---****X": //Short Range Air Defense Engagement Zone (SHORADEZ)
+                case "G*G*AAW---****X": //Weapons Free Zone
+                case "G*F*ACAI--****X": //Airspace Coordination Area (ACA) - Irregular
+                case "G*F*ACFI--****X": //Free Fire Area (FFA) - Irregular
+                case "G*F*ACNI--****X": //No Fire Area (NFA) - Irregular
+                case "G*F*ACRI--****X": //Restricted Fire Area (RFA) - Irregular
+                case "G*F*ATS---****X": //Smoke
+                case "G*F*ACSI--****X"://Fire Support Area - Irregular
+                case "G*F*AZII--****X": //Artillery Target Intelligence Zone (ATI), - Irregular
+                case "G*F*AZXI--****X": //Call For Fire Zone (CFFZ) - Irregular
+                case "G*F*AZCI--****X": //Censor Zone, - Irregular
+                case "G*F*AZFI--****X": //Critical Friendly Zone (CFZ), - Irregular
+                case "G*F*ACDI--****X": //Dead Space Area (DA), - Irregular
+                case "G*F*ACEI--****X": //Sensor Zone, Irregular
+                case "G*F*ACBI--****X": //Target Build-up Area, Irregular
+                case "G*F*ACVI--****X": //Target Value Area, Irregular
+                case "G*F*ACZI--****X": //Zone of Responsibility, Irregular
+                //case "G*F*ACT---****X": //Terminally Guided Munition Footprint (TGMF)
+                case "G*F*AKBI--****X": //Blue Kill Box, Irregular
+                case "G*F*AKPI--****X": //Purple Kill Box, Irregular
+                case "G*M*OGF---****X": //Obstacle Free Zone
+                case "G*M*BCL---****X": //Lane
+                case "G*S*AD----****X": //Detainee Holding Area
+                case "G*S*AE----****X": //Enemy Prisoner of War Holding Area
+                case "G*S*AR----****X": //Forward Arming and Refueling Point (FARP)
+                case "G*S*AH----****X": //Refugee Holding Area
+                case "G*S*ASR---****X": //Regimental Support Area (RSA)
+                case "G*G*ALC---****X": //Air Corridor
+                case "G*G*ALM---****X": //MRR
+                case "G*G*ALS---****X": //SAAFR
+                case "G*G*ALU---****X": //UA
+                case "G*G*ALL---****X": //LLTR
+                    if(modifiers != null && modifiers.size()>1)
+                        return 3;
+                    else
+                        return 0;
+
+                case "G*F*LCF---****X"://Fire Support Coordination Line (FSCL)
+                case "G*F*LCC---****X"://Coordinated Fire Line (CFL)
+                case "G*F*LCN---****X"://No Fire Line
+                case "G*F*LCR---****X"://Restrictive Fire Line
+                    if(_Properties.containsKey(ModifiersTG.W_DTG_1) ||
+                            _Properties.containsKey(ModifiersTG.W1_DTG_2))
+                        return 3;
+                    else
+                        return 2;
+
+                case "G*F*LCM---****X"://Munition Flight Path
+                case "G*T*L-----****X"://Delay
+                    if(_Properties.containsKey(ModifiersTG.W_DTG_1) ||
+                            _Properties.containsKey(ModifiersTG.W1_DTG_2))
+                        return 2;
+                    else
+                        return 0;
+
+
+                default://No Scale Sensitive text
+                    return 0;
+            }
+        }
+
+        return 0;
+    }
+
+    /**
+     * Checks if the symbol has features that make it scale aware and would require a refresh
+     * on zooming in or out.
+     * @return 0=No,1=arrowheads,2=decoratedLines,3=patternFills
+     */
+    public int isSymbolScaleSensitive()
+    {
+        //return SymbolUtilities.isScaleAware(this._symbolID);
+        String id = SymbolUtilities.getBasicSymbolID(_symbolID);
+
+        switch (id)
+        {
+            //ArrowHead or smaller detail
+            case "G*G*OAF---****X"://Attack By Fire
+            case "G*G*OAS---****X"://Support By Fire
+            case "G*G*GAS---****X"://Search Area/Reconnaissance Area
+            case "G*G*SLA---****X"://Ambush
+            case "G*G*OLKA--****X"://Airborne/Aviation
+            case "G*G*OLKGM-****X"://Direction of Main attack
+            case "G*G*OLKGS-****X"://Direction of Supporting attack
+            case "G*F*LT----****X"://Linear Target
+            case "G*F*LTS---****X"://Linear Smoke Target
+            case "G*F*LTF---****X"://Final Protective Fire
+            case "G*T*T-----****X"://Disrupt
+            case "G*M*OET---****X"://Turn
+            case "G*M*BDE---****X"://Obstacle Bypass Easy
+            case "G*M*BDD---****X"://Obstacle Bypass Difficult
+            case "G*M*BDI---****X"://Obstacle Bypass Impossible
+            case "G*M*BCB---****X"://Bridge or Gap?
+            case "G*M*BCA---****X"://Assault Crossing?
+            case "G*M*OS----****X"://Abatis?
+            case "G*M*BCL---****X"://?Lane?
+            case "G*M*BCF---****X"://Ferry
+            case "G*M*BCR---****X"://Raft Site
+            case "G*T*H-----****X"://Breach
+            case "G*T*Y-----****X"://Bypass
+            case "G*T*C-----****X"://Canalize
+            case "G*T*X-----****X"://Clear
+            case "G*T*L-----****X"://Delay
+            case "G*M*OED---****X"://Disrupt
+            case "G*T*A-----****X"://Follow and Assume
+            case "G*T*AS----****X"://Follow and Support
+                //case "G*T*O-----****X"://Occupy, details relative to size
+                //case "G*T*P-----****X"://Penetrate, details relative to size
+                //case "G*T*R-----****X"://Relief in Place (RIP), details relative to size
+                //case "G*T*M-----****X"://Retire/Retirement, details relative to size
+            case "G*T*S-----****X"://Secure, details relative to size
+            case "G*T*UC----****X"://Cover, details relative to size
+            case "G*T*UG----****X"://Guard, details relative to size
+            case "G*T*US----****X"://Screen, details relative to size
+            case "G*T*Z-----****X"://Seize, details relative to size
+            case "G*T*W-----****X"://Withdraw, details relative to size
+            case "G*T*WP----****X"://Withdraw under pressure, details relative to size
+                return 1;//arrowhead
+
+            //Decorated Lines
+            case "G*G*GLF---****X"://FLOT
+            case "G*G*GLC---****X"://Line of Contact
+                //case 140500://?Principal Direction of Fire?
+            case "G*G*GAF---****X"://Fortified Area
+            case "G*G*SAE---****X"://Encirclement
+            case "G*M*SP----****X"://Strong Point
+            case "G*G*DABP--****X"://Battle Position Prepared (P) but not Occupied
+            case "G*T*J-----****X"://Contain
+            case "G*T*Q-----****X"://Retain
+            case "G*M*OGB---****X"://Obstacle Belt
+            case "G*M*OGL---****X"://Obstacle Line
+            case "G*M*OGZ---****X"://Obstacle Zone
+            case "G*M*OGF---****X"://Obstacle Free Area
+            case "G*M*OGR---****X"://Obstacle Restricted Area
+                //case "G*MPOEF---****X"://Fix?
+            case "G*G*PY----****X"://Mined Area, Fenced
+            case "G*M*OHO---****X"://Overhead Wire
+            case "G*M*OADU--****X"://Ditch Under Construction
+            case "G*M*OADC--****X"://Ditch Completed
+            case "G*M*OAR---****X"://Ditch Reinforced
+            case "G*M*OAW---****X"://Antitank Wall
+            case "G*M*OWU---****X"://Wire Obstacles, Unspecified
+            case "G*M*OWS---****X"://Wire Obstacles, Single Fence
+            case "G*M*OWD---****X"://Wire Obstacles, Double Fence
+            case "G*M*OWA---****X"://Wire Obstacles, Double Apron Fence
+            case "G*M*OWL---****X"://Wire Obstacles, Low Wire Fence
+            case "G*M*OWH---****X"://Wire Obstacles, High Wire Fence
+            case "G*M*OWCS--****X"://Wire Obstacles, Single Concertina
+            case "G*M*OWCD--****X"://Wire Obstacles, Double Strand Concertina
+            case "G*M*OWCT--****X"://Wire Obstacles, Triple Strand Concertina
+            case "G*M*SL----****X"://Fortified Line
+            case "G*S*LCM---****X"://Moving Convoy
+            case "G*S*LCH---****X"://Halted Convoy
+            case "G*S*LRO---****X"://MSR One Way Traffic
+            case "G*S*LRW---****X"://MSR Two Way Traffic
+            case "G*S*LRT---****X"://MSR Alternating Traffic
+            case "G*T*F-----****X"://Fix
+                //case 341500://Isolate, most detail contained inside
+                //case 342600://Cordon and Knock, most detail contained inside
+                //case 342700://Cordon and Search, most detail contained inside
+                return 2;//decoration
+
+            //Areas with Pattern Fill
+            case "G*G*GAY---****X"://Limited Access Area
+            case "G*G*AAW---****X"://Weapons Free Zone
+            case "G*F*ACNI--****X"://NFA Irregular
+            case "G*F*ACNR--****X"://NFA Rectangular
+            case "G*F*ACNC--****X"://NFA Circular
+            case "G*M*NB----****X"://Bio Contaminated Area
+            case "G*M*NC----****X"://Chem Contaminated Area
+            case "G*M*NR----****X"://Rad Contaminated Area
+                if(!this.getUsePatternFill())
+                    return 3;//pattern fill
+                else
+                    return 0;
+            default:
+                return 0;
+        }
+    }    
 
     /**
      * returns just the symbol as an ImageInfo object.

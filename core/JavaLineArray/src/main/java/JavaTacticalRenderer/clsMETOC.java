@@ -39,7 +39,7 @@ public final class clsMETOC {
         try
         {            
             //added section for revD
-            if(symbolID.length()>15)
+            if(symbolID != null && symbolID.length()>15)
             {
                 //test for hold,brdghd
                 //String setA=Modifier2.getSetA(symbolID);

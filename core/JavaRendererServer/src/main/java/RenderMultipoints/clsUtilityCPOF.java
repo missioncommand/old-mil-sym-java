@@ -984,6 +984,7 @@ public final class clsUtilityCPOF {
         try {
             //instantiate a dummy tg which will be used to call GetSectorRangeFan
             tg1 = new TGLight();
+            tg1.set_SymbolId("");
             tg1.set_VisibleModifiers(true);
             tg1.set_LineThickness(0);
             tg1.set_FillColor(tg.get_FillColor());
