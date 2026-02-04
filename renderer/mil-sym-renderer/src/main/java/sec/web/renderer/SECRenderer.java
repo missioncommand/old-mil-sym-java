@@ -1187,11 +1187,11 @@ public class SECRenderer {
 		MilStdSymbol mSymbol = null;
 		try {
 
-			if (JavaRendererUtilities.is3dSymbol(symbolCode, modifiers)==false) 
-                        {
+			//if (JavaRendererUtilities.is3dSymbol(symbolCode, modifiers)==false) 
+                        //{
                             mSymbol = MultiPointHandler.RenderSymbolAsMilStdSymbol(id, name, description, symbolCode, controlPoints, scale, bbox,
 						modifiers, symStd);
-			}
+                        //}
 
 		} catch (Exception ea) {
 			mSymbol=null;
