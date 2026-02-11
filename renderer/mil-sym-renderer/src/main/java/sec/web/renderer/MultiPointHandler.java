@@ -406,10 +406,25 @@ public class MultiPointHandler {
      * @param symbolID
      * @return
      */
-    public static Boolean ShouldClipSymbol(String symbolID) {
+    public static Boolean ShouldClipSymbol(String symbolID)
+    {
+        return ShouldClipSymbol(symbolID, false, false);
+    }
+    
+    /**
+     * Checks if a symbol is one with decorated lines which puts a strain on
+     * google earth when rendering like FLOT. These complicated lines should be
+     * clipped when possible.
+     *
+     * @param symbolID
+     * @param useDashArray default true, some symbols don't need to be clipped if using dash array MilStdAttribute
+     * @param useFillPattern default true, some symbols don't need to be clipped if using fill pattern MilStdAttribute
+     * @return
+     */
+    public static Boolean ShouldClipSymbol(String symbolID, boolean useDashArray, boolean useFillPattern) {
         String affiliation = SymbolUtilities.getStatus(symbolID);
 
-        if (symbolID.substring(0, 1).equals("G") && affiliation.equals("A")) {
+        if (symbolID.substring(0, 1).equals("G") && affiliation.equals("A") && !useDashArray) {
             //SymbolDef sd = SymbolDefTable.getInstance().getSymbolDef(symbolID);
             //if(sd.getDrawCategory()==SymbolDef.DRAW_CATEGORY_LINE ||
             //        sd.getDrawCategory()==SymbolDef.DRAW_CATEGORY_POLYGON)
@@ -422,14 +437,14 @@ public class MultiPointHandler {
             return true;
         }
 
+        boolean shouldClip = false;
         String id = SymbolUtilities.getBasicSymbolID(symbolID);
-        if (id.equals("G*T*F-----****X")
-                || id.equals("G*F*LCC---****X") ||//CFL
+        if (
+                id.equals("G*F*LCC---****X") ||//CFL
                 id.equals("G*G*GLB---****X")
                 || id.equals("G*G*GLF---****X")
                 || id.equals("G*G*GLC---****X")
                 || id.equals("G*G*GAF---****X")
-                || id.equals("G*G*AAW---****X")
                 || id.equals("G*G*DABP--****X")
                 || id.equals("G*G*OLP---****X")
                 || id.equals("G*G*PY----****X")
@@ -441,7 +456,6 @@ public class MultiPointHandler {
                 || id.equals("G*G*ALS---****X")
                 || id.equals("G*G*SLB---****X")
                 || id.equals("G*G*SLH---****X")
-                || id.equals("G*G*GAY---****X")
                 || id.equals("G*M*OFA---****X")
                 || id.equals("G*M*OGB---****X")
                 || id.equals("G*M*OGL---****X")
@@ -452,8 +466,7 @@ public class MultiPointHandler {
                 || id.equals("G*M*OADC--****X")
                 || id.equals("G*M*OAR---****X")
                 || id.equals("G*M*OAW---****X")
-                || id.equals("G*M*OEF---****X") || //Obstacles Effect Fix
-                id.equals("G*M*OMC---****X")
+                || id.equals("G*M*OEF---****X") //Obstacles Effect Fix
                 || id.equals("G*M*OWU---****X")
                 || id.equals("G*M*OWS---****X")
                 || id.equals("G*M*OWD---****X")
@@ -469,15 +482,6 @@ public class MultiPointHandler {
                 id.equals("G*M*BCE---****X") || //Ford Easy
                 id.equals("G*M*SL----****X")
                 || id.equals("G*M*SP----****X")
-                || id.equals("G*M*NR----****X")
-                || id.equals("G*M*NB----****X")
-                || id.equals("G*M*NC----****X")
-                || id.equals("G*F*ACNI--****X")
-                || id.equals("G*F*ACNR--****X")
-                || id.equals("G*F*ACNC--****X")
-                || id.equals("G*F*AKBC--****X")
-                || id.equals("G*F*AKBI--****X")
-                || id.equals("G*F*AKBR--****X")
                 || id.equals("G*F*AKPC--****X")
                 || id.equals("G*F*AKPI--****X")
                 || id.equals("G*F*AKPR--****X")
@@ -492,17 +496,45 @@ public class MultiPointHandler {
                 || id.equals("G*S*LRW---****X")
                 || id.equals("G*T*Q-----****X")
                 || id.equals("G*T*E-----****X")
-                || id.equals("G*T*F-----****X") || //Tasks Fix
-                id.equals("G*T*K-----****X") || //counterattack.
-                id.equals("G*T*KF----****X") || //counterattack by fire.
-                id.equals("G*G*PA----****X") || //AoA for Feint
-                id.equals("G*M*ORP---****X")
-                || id.equals("G*M*ORS---****X")
-                || id.equals("G*T*A-----****X")) {
-            return true;
-        } else {
-            return false;
+                || id.equals("G*T*F-----****X") || //Tasks Fix               
+                id.equals("G*G*PA----****X")  //AoA for Feint
+                ) 
+        {
+            shouldClip = true;//decorated lines
+        } 
+        else if(!useFillPattern)
+        {
+            if(id.equals("G*G*GAY---****X") //limited access area
+                    || id.equals("G*G*AAW---****X")//weapons free zone
+                    || id.equals("G*M*NB----****X")//bio area
+                    || id.equals("G*M*NC----****X")//chem area
+                    || id.equals("G*M*NR----****X")//radioactive area
+                    || id.equals("G*F*AKBC--****X")//kill box blue circular
+                    || id.equals("G*F*AKBI--****X")//kb irr
+                    || id.equals("G*F*AKBR--****X")//kb rect
+                    || id.equals("G*F*ACNI--****X")//NFA
+                    || id.equals("G*F*ACNR--****X")//NFA rectnagular
+                    || id.equals("G*F*ACNC--****X")//NFA circular
+                    )
+            {
+                shouldClip = true;//not using fill pattern so clip to not draw more lines than we have to
+            }
         }
+        else if (!useDashArray)
+        {
+            if(id.equals("G*M*OMC---****X") //mine cluster
+                || id.equals("G*T*K-----****X") //counterattack.
+                || id.equals("G*T*KF----****X") //counterattack by fire.
+                || id.equals("G*M*ORP---****X") //blown bridges planned
+                || id.equals("G*M*ORS---****X") //blown bridges explosive
+                || id.equals("G*T*A-----****X") //follow and assume
+                    )
+            {
+                shouldClip = true;//not using dash array so clip to not draw more lines than we have to
+            }
+        }
+        
+        return shouldClip;
     }
 
     /**
@@ -516,6 +548,8 @@ public class MultiPointHandler {
      */
     private static double getReasonableScale(String bbox, double origScale) {
         double scale = origScale;
+        if(!RendererSettings.getInstance().getAutoAdjustScale())
+                return origScale;
         try {
             String[] bounds = bbox.split(",");
             double left = Double.valueOf(bounds[0]).doubleValue();
@@ -826,13 +860,8 @@ public class MultiPointHandler {
 
         //if(normalize)
         //NormalizeGECoordsToGEExtents(0,360,geoCoords2);
-        //disable clipping unless it spans IDL
-        if (ShouldClipSymbol(symbolCode) == false) {
-            if (crossesIDL(geoCoords) == false) {
-                rect = null;
-                bboxCoords = null;
-            }
-        }
+        
+
 
         tgl.set_SymbolId(symbolCode);// "GFGPSLA---****X" AMBUSH symbol code
         tgl.set_Pixels(null);
@@ -856,6 +885,15 @@ public class MultiPointHandler {
                 populateModifiers(symbolModifiers, mSymbol);
             } else {
                 mSymbol.setFillColor(null);
+            }
+            
+
+            //disable clipping unless it spans IDL
+            if (ShouldClipSymbol(symbolCode, mSymbol.getUseDashArray(), mSymbol.getUsePatternFill()) == false) {
+                if (crossesIDL(geoCoords) == false) {
+                    rect = null;
+                    bboxCoords = null;
+                }
             }
 
             //check for required points & parameters
@@ -1481,13 +1519,7 @@ public class MultiPointHandler {
 
         //if(normalize)
         //NormalizeGECoordsToGEExtents(0,360,geoCoords2);
-        //disable clipping unless it spans IDL
-        if (ShouldClipSymbol(symbolCode) == false) {
-            if (crossesIDL(geoCoords) == false) {
-                rect = null;
-                bboxCoords = null;
-            }
-        }
+
 
         tgl.set_SymbolId(symbolCode);// "GFGPSLA---****X" AMBUSH symbol code
         tgl.set_Pixels(null);
@@ -1509,6 +1541,14 @@ public class MultiPointHandler {
             if (mSymbol.getFillColor() != null) {
                 Color fc = mSymbol.getFillColor();
                 fillColor = Integer.toHexString(fc.getRGB());
+            }
+            
+            //disable clipping unless it spans IDL
+            if (ShouldClipSymbol(symbolCode,mSymbol.getUseDashArray(),mSymbol.getUsePatternFill()) == false) {
+                if (crossesIDL(geoCoords) == false) {
+                    rect = null;
+                    bboxCoords = null;
+                }
             }
 
             //get pixel values in case we need to do a fill.
@@ -1821,7 +1861,7 @@ public class MultiPointHandler {
 //            {
 //                ((PointConversion)ipc).set_normalize(false);
 //            }
-            if (ShouldClipSymbol(symbolCode) || crossesIDL(geoCoords)) {
+            if (ShouldClipSymbol(symbolCode,mSymbol.getUseDashArray(),mSymbol.getUsePatternFill()) || crossesIDL(geoCoords)) {
                 temp = ipc.GeoToPixels(new Point2D.Double(left, top));
                 leftX = (int) temp.getX();
                 topY = (int) temp.getY();

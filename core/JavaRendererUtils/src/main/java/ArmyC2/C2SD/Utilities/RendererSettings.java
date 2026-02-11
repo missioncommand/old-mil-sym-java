@@ -143,6 +143,8 @@ public class RendererSettings {
     private boolean _TwoLabelOnly = true;
 
     private double _overscanScale = 1.0;
+    
+    private boolean _autoAdjustScale = true;
 
     //acevedo - 12/8/17 - allow the setting of affiliation colors.
     private   Color _friendlyUnitFillColor = AffiliationColors.FriendlyUnitFillColor;
@@ -810,6 +812,19 @@ public class RendererSettings {
 
     public double getOverscanScale() {
         return this._overscanScale;
+    }
+    
+    /**
+     * Will attempt to adjust the scale if it doesn't seem to make sense with the passed in bbox.
+     * If you wish to have absolute control over the scale, set to false.
+     * @param autoAdjustScale default true
+     */
+    public void setAutoAdjustScale(boolean autoAdjustScale) {
+        this._autoAdjustScale = autoAdjustScale;
+    }
+
+    public boolean getAutoAdjustScale() {
+        return this._autoAdjustScale;
     }
 
     /**
